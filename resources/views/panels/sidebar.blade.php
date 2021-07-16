@@ -303,6 +303,15 @@
                   </a>
                 </li>
                 @endcan
+
+                @can('attendance', 'Models\PresencialWork')
+                <li {{(request()->is('presencials.attendance-list')) ? 'class=active' : '' }}>
+                  <a href="{{route('presencials.attendance-list')}}">
+                    <i class="bx bx-right-arrow-alt"></i>
+                  <span class="menu-item">Registro de Asistencia</span>
+                  </a>
+                </li>
+                @endcan
           </ul>
         </li>
         @endcan

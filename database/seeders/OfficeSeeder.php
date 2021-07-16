@@ -15,69 +15,69 @@ class OfficeSeeder extends Seeder
     public function run()
     {
         Office::create([
-            'name'=>'ÓRGANO DE DIRECCIÓN/SECRETARÍA GENERAL ',
-            'description'=>'ÓRGANO DE DIRECCIÓN/SECRETARÍA GENERAL ',
+            'name'=>'ÓRGANO DE DIRECCIÓN/SECRETARÍA GENERAL',
+            'description'=>'DIR/SG',
             'status'=>'ACTIVO'
         ]);
         Office::create([
-                    'name'=>'OFICINA DE ASESORÍA JURÍDICA ',
-                    'description'=>'OFICINA DE ASESORÍA JURÍDICA ',
+                    'name'=>'OFICINA DE ASESORÍA JURÍDICA',
+                    'description'=>'OAJ',
                     'status'=>'ACTIVO'
                 ]);
         Office::create([
-                    'name'=>'OFICINA DE ADMINISTRACIÓN/ÁREA DE TESORERÍA ',
-                    'description'=>'OFICINA DE ADMINISTRACIÓN/ÁREA DE TESORERÍA ',
+                    'name'=>'OFICINA DE ADMINISTRACIÓN/ÁREA DE TESORERÍA',
+                    'description'=>'OA/TES',
                     'status'=>'ACTIVO'
                 ]);
         Office::create([
-                    'name'=>'OFICINA DE ADMINISTRACIÓN/ÁREA DE INFRAESTRUCTURA ',
-                    'description'=>'OFICINA DE ADMINISTRACIÓN/ÁREA DE INFRAESTRUCTURA ',
+                    'name'=>'OFICINA DE ADMINISTRACIÓN/ÁREA DE INFRAESTRUCTURA',
+                    'description'=>'OA/INFR',
                     'status'=>'ACTIVO'
                 ]);
         Office::create([
-                    'name'=>'OFICINA DE ADMINISTRACIÓN/ÁREA DE CONTROL PATRIMONIAL ',
-                    'description'=>'OFICINA DE ADMINISTRACIÓN/ÁREA DE CONTROL PATRIMONIAL ',
+                    'name'=>'OFICINA DE ADMINISTRACIÓN/ÁREA DE CONTROL PATRIMONIAL',
+                    'description'=>'OA/PATR',
                     'status'=>'ACTIVO'
                 ]);
         Office::create([
-                    'name'=>'OFICINA DE ADMINISTRACIÓN/ÁREA DE CONTABILIDAD ',
-                    'description'=>'OFICINA DE ADMINISTRACIÓN/ÁREA DE CONTABILIDAD ',
+                    'name'=>'OFICINA DE ADMINISTRACIÓN/ÁREA DE CONTABILIDAD',
+                    'description'=>'OA/CONT',
                     'status'=>'ACTIVO'
                 ]);
         Office::create([
-                    'name'=>'OFICINA DE ADMINISTRACIÓN/ÁREA DE ABASTECIMIENTO Y SERVICIOS AUXLIARES ',
-                    'description'=>'OFICINA DE ADMINISTRACIÓN/ÁREA DE ABASTECIMIENTO Y SERVICIOS AUXLIARES ',
+                    'name'=>'OFICINA DE ADMINISTRACIÓN/ÁREA DE ABASTECIMIENTO Y SERVICIOS AUXLIARES',
+                    'description'=>'OA/ABAST',
                     'status'=>'ACTIVO'
                 ]);
         Office::create([
-                    'name'=>'OFICINA DE ADMINISTRACIÓN ',
-                    'description'=>'OFICINA DE ADMINISTRACIÓN ',
+                    'name'=>'OFICINA DE ADMINISTRACIÓN',
+                    'description'=>'OA',
                     'status'=>'ACTIVO'
                 ]);
         Office::create([
-                    'name'=>'DIRECCIÓN DE GESTIÓN INSTITUCIONAL ',
-                    'description'=>'DIRECCIÓN DE GESTIÓN INSTITUCIONAL ',
+                    'name'=>'DIRECCIÓN DE GESTIÓN INSTITUCIONAL',
+                    'description'=>'DGI',
                     'status'=>'ACTIVO'
                 ]);
         Office::create([
                     'name'=>'DIRECCIÓN DE GESTIÓN PEDAGÓGICA',
-                    'description'=>'DIRECCIÓN DE GESTIÓN PEDAGÓGICA',
+                    'description'=>'DGP',
                     'status'=>'ACTIVO'
                 ]);
 
         Office::create([
-                    'name'=>'ÓRGANO DE CONTROL INSTITUCIONAL ',
-                    'description'=>'ÓRGANO DE CONTROL INSTITUCIONAL ',
+                    'name'=>'ÓRGANO DE CONTROL INSTITUCIONAL',
+                    'description'=>'OCI',
                     'status'=>'ACTIVO'
                 ]);
         Office::create([
-                    'name'=>'ÓRGANO DE DIRECCIÓN ',
-                    'description'=>'ÓRGANO DE DIRECCIÓN ',
+                    'name'=>'ÓRGANO DE DIRECCIÓN',
+                    'description'=>'DIR',
                     'status'=>'ACTIVO'
                 ]);
         Office::create([
                     'name'=>'OFICINA DE ADMINISTRACIÓN/ÁREA DE PERSONAL',
-                    'description'=>'OFICINA DE ADMINISTRACIÓN/ÁREA DE PERSONAL',
+                    'description'=>'OA/APER',
                     'status'=>'ACTIVO'
                 ]);
 

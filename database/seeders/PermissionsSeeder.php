@@ -229,12 +229,28 @@ class PermissionsSeeder extends Seeder
         ]);
 
         
+        //Personal de Puerta
+        Permission::create([
+            'name' => 'registrar asistencia',
+            'guard_name' => 'web',
+        ]);
+
+        
        
 
         //Admin
         $admin = Role::create(['name' => 'Administrador']);
 
-        Role::create(['name'=>'Trabajador']);
+        Role::create(['name'=>'Trabajador'])->givePermissionTo([
+            'lista presencial',
+            'registrar presencial',
+            'eliminar presencial'
+        ]);;
+
+        Role::create(['name'=>'Personal de Asistencia'])->givePermissionTo([
+            'registrar asistencia',
+            
+        ]);;
 
     
         

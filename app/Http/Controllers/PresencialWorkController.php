@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use App\Models\PresencialWork;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class PresencialWorkController extends Controller
 {
@@ -45,6 +46,14 @@ class PresencialWorkController extends Controller
         ];
         
         return view('presencials.attendance',compact('event'),['pageConfigs'=>$pageConfigs,'breadcrumbs'=>$breadcrumbs]); 
+    }
+
+    public function attendacelist(){
+        Gate::authorize('attendance', 'Models\PresencialWork');
+
+        $events = Event::where('status','ACTIVO')->get();
+
+        return view('presencials.attendance-list',compact('events'));
     }
 
 }

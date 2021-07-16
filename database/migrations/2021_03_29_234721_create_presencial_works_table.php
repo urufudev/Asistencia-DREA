@@ -19,16 +19,16 @@ class CreatePresencialWorksTable extends Migration
             $table->bigInteger('user_id')->unsigned()->nullable();
             $table->bigInteger('office_id')->unsigned()->nullable();
 
-            $table->dateTime('input');
-            $table->dateTime('output');
+            $table->dateTime('input')->nullable();
+            $table->dateTime('output')->nullable();
 
-            $table->string('feber');
-            $table->string('respire');
-            $table->string('fleme');
-            $table->string('olfate');
-            $table->string('personscovid');
-            $table->string('medicine');
-            $table->string('name_medicine');
+            $table->string('feber')->nullable();
+            $table->string('respire')->nullable();
+            $table->string('fleme')->nullable();
+            $table->string('olfate')->nullable();
+            $table->string('personscovid')->nullable();
+            $table->string('medicine')->nullable();
+            $table->string('name_medicine')->nullable();
 
             $table->timestamps();
 

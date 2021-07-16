@@ -20,16 +20,15 @@
 }
 
     </style>
-    <link href="{{public_path().'/css/eventpdfy.css'}}" rel="stylesheet"> 
+    <link href="{{asset('/css/eventpdfy.css')}}" rel="stylesheet"> 
     
 </head>
 <body style="margin-top:2.7cm;">
-    
         
 <header>
     <div class="mt-2">
         <p class="text-center">
-        <img class="text-center" src ="{{public_path().'/images/drea/header1.png'}}" height="100px">
+        <img class="text-center" src ="{{asset('/images/drea/header1.png')}}" height="100px">
         </p>    
     </div>
 </header>
@@ -95,9 +94,9 @@
                         <td style="vertical-align: middle;">{{$item->user->full_namea}}</td>
                         <td class="text-center" style="vertical-align: middle;">{{$item->user->dni}}</td>
                         <td style="vertical-align: middle;">{{$item->user->profile->position->name ?? 'ANALISTA EN SISTEMAS Y TECNOLOGÍAS DE LA INFORMACIÓN'}}</td>
+                        <td class="text-center"> {{$item->input ?? ''}}</td>
                         <td></td>
-                        <td></td>
-                        <td></td>
+                        <td class="text-center"> {{$item->output ?? ''}}</td>
                         <td></td>
                         <td></td>
                         <td></td>

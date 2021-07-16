@@ -62,6 +62,10 @@ Route::middleware(['auth'])->group(function () {
 
      Route::resource('presencials',PresencialWorkController::class);
 
+
+     Route::get('/attendance-list', [PresencialWorkController::class, 'attendacelist'])->name('presencials.attendance-list');
+
+
      Route::get('/events/{event}/attendance', [PresencialWorkController::class, 'attendance'])->name('attendance');
      
 

@@ -45,8 +45,31 @@ class UserSeeder extends Seeder
             'status' => true,
             
         ]);
-        Profile::create(['user_id' => '1','photo'=>'https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=Administrador+DREA']);
-        Profile::create(['user_id' => '2','photo'=>'https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=Jone+Doe']);
+        Profile::create([
+            'user_id' => '1',
+            'photo'=>'https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=Administrador+DREA',
+            'genre'=> 'MASCULINO',
+            'department_id' => '5',
+            'province_id'=> '501',
+            'district_id' => '50101',
+            'laboral_id' => '1',
+            'pension_id' => '1',
+            'position_id' => '1',
+            'condition_id' => '1',
+            
+        ]);
+        Profile::create([
+            'user_id' => '2',
+            'photo'=>'https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=Jone+Doe',
+            'genre'=> 'MASCULINO',
+            'department_id' => '5',
+            'province_id'=> '501',
+            'district_id' => '50101',
+            'laboral_id' => '1',
+            'pension_id' => '1',
+            'position_id' => '1',
+            'condition_id' => '1',
+        ]);
     
         /* User::factory()->times(100)->create(); */
     

@@ -14,8 +14,8 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(OfficeSeeder::class);
-        $this->call(UserSeeder::class);
-        $this->call(PermissionsSeeder::class);
+       
+        
         
         $this->call(LaboralSeeder::class);
         $this->call(PensionSeeder::class);
@@ -26,5 +26,8 @@ class DatabaseSeeder extends Seeder
         $this->call(DepartmentsTableSeeder::class);
         $this->call(ProvincesTableSeeder::class);
         $this->call(DistrictsTableSeeder::class);
+
+        $this->call(UserSeeder::class);
+        $this->call(PermissionsSeeder::class);
     }
 }

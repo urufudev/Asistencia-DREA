@@ -34,7 +34,7 @@
                     @csrf
                     <div class="form-group">
                         <label class="form-label">Dni</label>
-                        <input type="text" class="form-control " name="dni" maxlength="9" value="{{old('dni')}}" autocomplete="off">
+                        <input type="text" class="form-control " name="dni" maxlength="8" value="{{old('dni')}}" autocomplete="off">
                         @error('dni')
                             <div class="text-danger fs-15 mt-1">{{$message}}</div>
                         @enderror

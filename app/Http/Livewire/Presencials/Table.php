@@ -44,7 +44,7 @@ class Table extends Component
     public $medicine = null;
     public $name_medicine = null;
 
-    public $control = 0;
+    public $control;
 
     protected $rules = [
         'feber' => 'required',
@@ -82,6 +82,8 @@ class Table extends Component
             });
 
 
+
+
             /* $eventdetails = PresencialWork::where('event_id',$presencial->id)
             ->get();
 
@@ -114,10 +116,69 @@ class Table extends Component
         $this->perPage= 10;
     }
 
+ /*    public function updated()
+    {
+        if ($this->feber = 'SI' &&  $this->respire = 'SI' && $this->fleme = 'SI') {
+            $control = 'SI';
+        } 
+        elseif($this->feber = 'SI' &&  $this->respire = 'SI' && $this->olfate = 'SI')  {
+            $control = 'SI';
+        }
+        elseif($this->feber = 'SI' &&  $this->respire = 'SI' && $this->personscovid = 'SI')  {
+            $control = 'SI';
+        }
+        elseif($this->feber = 'SI' &&  $this->fleme = 'SI' && $this->olfate = 'SI')  {
+            $control = 'SI';
+        }
+        elseif($this->feber = 'SI' &&  $this->fleme = 'SI' && $this->personscovid = 'SI')  {
+            $control = 'SI';
+        }
+        elseif($this->feber = 'SI' &&  $this->olfate = 'SI' && $this->personscovid = 'SI')  {
+            $control = 'SI';
+        }
+        elseif($this->respire = 'SI' &&  $this->fleme = 'SI' && $this->olfate = 'SI')  {
+            $control = 'SI';
+        }
+        elseif($this->respire = 'SI' &&  $this->fleme = 'SI' && $this->personscovid = 'SI')  {
+            $control = 'SI';
+        }
+        elseif($this->respire = 'SI' &&  $this->olfate = 'SI' && $this->personscovid = 'SI')  {
+            $control = 'SI';
+        }
+        elseif($this->fleme = 'SI' &&  $this->olfate = 'SI' && $this->personscovid = 'SI')  {
+            $control = 'SI';
+        }
+        else{
+            $control = 'NO';
+        }
+        
+    } */
+
     public function updated($name, $value)
     {
-        
-        if ($name == 'feber' && $value == 'SI' ) {
+        if($name == 'feber' && $value == 'SI' ) {
+            $this->control = $this->control + 1;
+            
+        }
+        if($name == 'respire' && $value == 'SI' ) {
+            $this->control = $this->control + 1;
+            
+        }
+        if($name == 'fleme' && $value == 'SI' ) {
+            $this->control = $this->control + 1;
+            
+        }
+        if($name == 'olfate' && $value == 'SI' ) {
+            $this->control = $this->control + 1;
+            
+        }
+        if($name == 'personscovid' && $value == 'SI' ) {
+            $this->control = $this->control + 1;
+            
+        }
+
+        /* old */
+        /* if ($name == 'feber' && $value == 'SI' ) {
             if ($this->control >= 0){
                 $this->control = $this->control + 1;
 
@@ -129,81 +190,8 @@ class Table extends Component
 
             }
  
-        }
-        if ($name == 'respire' && $value == 'SI' ) {
-            if ($this->control >= 0){
-                $this->control = $this->control + 1;
+        } */
 
-            }
-            
-        }
-        elseif($name == 'respire' && $value == 'NO' ){
-            if($this->control >= 1){
-                $this->control--;
-
-            }
- 
-        }
-
-        if ($name == 'fleme' && $value == 'SI' ) {
-            if ($this->control >= 0){
-                $this->control = $this->control + 1;
-
-            }
-            
-        }
-        elseif($name == 'fleme' && $value == 'NO' ){
-            if($this->control >= 1){
-                $this->control--;
-
-            }
- 
-        }
-
-        if ($name == 'olfate' && $value == 'SI' ) {
-            if ($this->control >= 0){
-                $this->control = $this->control + 1;
-
-            }
-            
-        }
-        elseif($name == 'olfate' && $value == 'NO' ){
-            if($this->control >= 1){
-                $this->control--;
-
-            }
- 
-        }
-
-        if ($name == 'personscovid' && $value == 'SI' ) {
-            if ($this->control >= 0){
-                $this->control = $this->control + 1;
-
-            }
-            
-        }
-        elseif($name == 'personscovid' && $value == 'NO' ){
-            if($this->control >= 1){
-                $this->control--;
-
-            }
- 
-        }
-
-        if ($name == 'medicine' && $value == 'SI' ) {
-            if ($this->control >= 0){
-                $this->control = $this->control + 1;
-
-            }
-            
-        }
-        elseif($name == 'medicine' && $value == 'NO' ){
-            if($this->control >= 1){
-                $this->control--;
-
-            }
- 
-        }
         /* if($name == 'respire' && $value == 'SI' ) {
             $this->control = $this->control + 1;
             
@@ -352,7 +340,8 @@ class Table extends Component
 
     public function destroy(Event $presencial)
     {
-        Gate::authorize('forceDelete',$presencial);
+        /* dd($presencial); */
+        Gate::authorize('deleteAttendance', 'Models\PresencialWork');
         $presencialworks = PresencialWork::where('user_id' , Auth::user()->id)
         ->where( 'event_id', $presencial->id)
         ->first();

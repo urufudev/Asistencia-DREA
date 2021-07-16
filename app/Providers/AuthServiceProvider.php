@@ -20,8 +20,9 @@ class AuthServiceProvider extends ServiceProvider
         'Models\Office' => 'App\Policies\OfficePolicy',
         'Models\Condition' => 'App\Policies\ConditionPolicy',
         
-        'Models\Event' => 'App\Policies\EventPolicy',
         'Models\PresencialWork' => 'App\Policies\PresencialWorkPolicy',
+        'Models\Event' => 'App\Policies\EventPolicy',
+        
         'Models\Position' => 'App\Policies\PositionPolicy',
     ];
 

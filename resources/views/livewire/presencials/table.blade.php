@@ -139,8 +139,8 @@
                         <i class="bx bx-group mr-1"></i>
                         Registrado</div>
                     
-                        @can('forceDelete', $presencial ) 
-                                              
+                        {{-- @can('deleteAttendance', $presencial) --}} 
+                        @can('deleteAttendance', 'Models\PresencialWork')
                         <button type="button" class="btn  btn-outline-danger mr-1 mb-1" data-target="#modal-destroy-{{$presencial->id}}" data-toggle="modal">
                         ¿Desea eliminar su registro?</button>
                         @endcan

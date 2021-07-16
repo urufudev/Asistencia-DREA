@@ -38,6 +38,11 @@ class PresencialWorkPolicy
         return $user->can('eliminar presencial');
     }
 
+    public function attendance(User $user)
+    {
+        return $user->can('registrar asistencia');
+    }
+
     /**
      * Determine whether the user can restore the model.
      *
@@ -58,6 +63,11 @@ class PresencialWorkPolicy
      * @return mixed
      */
     public function forceDelete(User $user, Event $presencial)
+    {
+        return $user->can('eliminar presencial');
+    }
+
+    public function deleteAttendance(User $user)
     {
         return $user->can('eliminar presencial');
     }

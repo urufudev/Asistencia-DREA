@@ -35,4 +35,26 @@ class Event extends Model
         ;
     }
 
+    public function getStartDateAttribute()
+    {
+        if ($this->start != null) {
+            return Carbon::parse($this->start)->format('d/m/Y H:i A');
+        }
+        else{
+            return 'S/R';
+        }
+        
+    }
+
+    public function getEndDateAttribute()
+    {
+        if ($this->end != null) {
+            return Carbon::parse($this->end)->format('d/m/Y H:i A');
+        }
+        else{
+            return 'S/R';
+        }
+        
+    }
+
 }

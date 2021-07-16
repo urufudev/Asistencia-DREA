@@ -53,7 +53,6 @@ class DashboardController extends Controller
  
         foreach ($profiles_condition as $key => $value) {
             $condition = Condition::find($key);
- 
              array_push($condition_names, $condition->name);
         }
 
