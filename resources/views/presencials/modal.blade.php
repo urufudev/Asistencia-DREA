@@ -178,7 +178,7 @@
                             </button>
                             {{-- <button>Save</button> --}}
                             
-                            {{$this->control}}
+                            {{-- {{$this->control}} --}}
                             {{-- @if ($this->feber == 'SI' || $this->respire == 'SI' || $this->fleme == 'SI' 
                             || $this->olfate == 'SI' )
 

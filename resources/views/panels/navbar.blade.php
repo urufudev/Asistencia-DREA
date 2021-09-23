@@ -50,7 +50,7 @@ data-bgcolor="@if(isset($configData['navbarBgColor'])){{$configData['navbarBgCol
           <li class="dropdown dropdown-user nav-item">
             <a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
               <div class="user-nav d-sm-flex d-none">
-                <span class="user-name">{{ Auth::user()->name ?? 'Invitado'}} </span>
+                <span class="user-name text-capitalize">{{ Auth::user()->name ?? 'Invitado'}} </span>
                 <span class="user-status text-muted">{{ Str::limit(Auth::user()->profile->position->name ?? 'Cargo',25)}}</span>
               </div>
               <span><img class="round" src="{{ Auth::user()->profile->photo ?? 'xd'}}" alt="avatar" height="40" width="40"></span>
@@ -64,7 +64,7 @@ data-bgcolor="@if(isset($configData['navbarBgColor'])){{$configData['navbarBgCol
               </a>
               <div class="dropdown-divider mb-0"></div>
               <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-              document.getElementById('logout-form').submit();"><i class="bx bx-power-off mr-50"></i> Logout
+              document.getElementById('logout-form').submit();"><i class="bx bx-power-off mr-50"></i> Salir
              <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
               {{ csrf_field() }}
             </form> 

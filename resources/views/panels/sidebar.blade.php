@@ -5,7 +5,7 @@
       <ul class="nav navbar-nav flex-row">
         
       <li class="nav-item mr-auto">
-          <a class="navbar-brand" href="{{asset('/')}}">
+          <a class="navbar-brand" href="{{route('dashboard')}}">
           <div class="brand-logo">
             <img src="{{asset('images/logo/logo.png')}}" class="logo" alt="">
           </div>
@@ -45,7 +45,7 @@
               <li class="nav-item">
                 <a class="text-center">
                              
-                  <h5 class="brand-text ">{{ Auth::user()->full_namea ?? 'Invitado'}}</h5>
+                  <h5 class="brand-text text-capitalize">{{ Auth::user()->full_namea ?? 'Invitado'}}</h5>
                   <span class="brand-text">{{ Str::limit(Auth::user()->profile->position->name ?? 'Cargo',25)}}</span>
                 </a>
               </li>

@@ -84,9 +84,10 @@
                     @else
                     <a href={{route('login')}} class="main__btn btn btn_orange">Iniciar Sesión</a>
                     <a href={{route('register')}} class="main__btn btn btn_border">
-                       <svg class="icon icon-play">
-                          <use xlink:href="{{asset('landing/img/sprite.svg#icon-play')}}"></use>
-                       </svg>
+                       
+                       <svg  class="icon icon-twitter h-12 w-12" xmlns="http://www.w3.org/2000/svg"  fill="none" viewBox="0 0 20 20" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                      </svg>
                        <span>Registrarse</span>
                      </a>
                             

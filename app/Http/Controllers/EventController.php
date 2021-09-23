@@ -166,9 +166,13 @@ class EventController extends Controller
         
         $eventdetails = PresencialWork::where('event_id',$event->id)
         ->with('office')
+      /*   ->with('user') */
+        /* ->orderBy('user.ap_paterno', 'desc') */
         ->get()
+        ->sortBy('user.ap_paterno')
         ->groupBy('office_id');
 
+      /*   dd($eventdetails); */
 
         $url = 'http://200.37.186.114/images/drea/header.png';
 

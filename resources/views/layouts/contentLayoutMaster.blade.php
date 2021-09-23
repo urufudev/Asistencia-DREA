@@ -9,7 +9,7 @@
   $configData = Helper::applClasses();
 @endphp
 
-<html class="loading" lang="@if(session()->has('locale')){{session()->get('locale')}}@else{{$configData['defaultLanguage']}}@endif"
+<html class="loading" lang="es"
  data-textdirection="{{$configData['direction'] == 'rtl' ? 'rtl' : 'ltr' }}" data-asset-path="{{ asset('/')}}">
   <!-- BEGIN: Head-->
 

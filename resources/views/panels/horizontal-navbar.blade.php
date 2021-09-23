@@ -4,7 +4,7 @@
   <div class="navbar-header d-xl-block d-none">
     <ul class="nav navbar-nav flex-row">
       <li class="nav-item">
-      <a class="navbar-brand" href="{{asset('/')}}">
+      <a class="navbar-brand" href="{{route('dashboard')}}">
           <div class="brand-logo">
           <img src="{{asset('images/logo/logo-light.png')}}" class="logo" alt="">
           </div>

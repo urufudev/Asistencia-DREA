@@ -156,7 +156,7 @@ class Table extends Component
 
     public function updated($name, $value)
     {
-        if($name == 'feber' && $value == 'SI' ) {
+        /* if($name == 'feber' && $value == 'SI' ) {
             $this->control = $this->control + 1;
             
         }
@@ -175,7 +175,7 @@ class Table extends Component
         if($name == 'personscovid' && $value == 'SI' ) {
             $this->control = $this->control + 1;
             
-        }
+        } */
 
         /* old */
         /* if ($name == 'feber' && $value == 'SI' ) {

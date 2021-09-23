@@ -9,7 +9,7 @@
   $configData = Helper::applClasses();
 @endphp
 
-<html class="loading" lang="en" data-textdirection="ltr">
+<html class="loading" lang="es" data-textdirection="ltr">
   <!-- BEGIN: Head-->
   <head>
     <meta charset="UTF-8">

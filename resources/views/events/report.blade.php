@@ -52,7 +52,8 @@
             <th scope="col-10" colspan="10"> 
                     
                 <p class="text-center" style="font-size:12px;margin-bottom: 0px;margin-top:0px;">
-                    RELACIÓN DIARIA DE PERSONAL QUE EFECTUARÁ TRABAJO PRESENCIAL EL DÍA {{$event->date->format('d/m/Y')}}
+                    {{$event->name .' '. $event->date->format('d/m/Y')}}
+                    {{-- RELACIÓN DIARIA DE PERSONAL QUE EFECTUARÁ TRABAJO PRESENCIAL EL DÍA {{$event->date->format('d/m/Y')}} --}}
                 </p> 
         </th>
           </tr>
@@ -91,7 +92,7 @@
 
                     <tr>
                         <th scope="row" class="text-center" style="vertical-align: middle;">{{ $loop->iteration }}</th>
-                        <td style="vertical-align: middle;">{{$item->user->full_namea}}</td>
+                        <td style="vertical-align: middle;">{{$item->user->full_name}}</td>
                         <td class="text-center" style="vertical-align: middle;">{{$item->user->dni}}</td>
                         <td style="vertical-align: middle;">{{$item->user->profile->position->name ?? 'ANALISTA EN SISTEMAS Y TECNOLOGÍAS DE LA INFORMACIÓN'}}</td>
                         <td class="text-center"> {{$item->input ?? ''}}</td>
