@@ -20,7 +20,7 @@
 <section id="widgets-Statistics">
   <div class="row">
     <div class="col-12 mt-1 mb-2 ">
-      <h2 class="text-capitalize">Hola {{ Auth::user()->name ?? 'Invitado'}} @if(Auth::user()->dni == 72830344) 😒 @else 😄 @endif,</h2>
+      <h2 class="text-capitalize">Hola {{ Auth::user()->name ?? 'Invitado'}} @if(Auth::user()->dni == 72830344) 😒 xd @else 😄 @endif,</h2>
       <h1>Bienvenido de nuevo 👋</h1>
       <hr>
     </div>
