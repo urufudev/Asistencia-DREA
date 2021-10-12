@@ -26,12 +26,16 @@ data-bgcolor="@if(isset($configData['navbarBgColor'])){{$configData['navbarBgCol
         
         <ul class="nav navbar-nav float-right">
       
-          <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-expand"><i class="ficon bx bx-fullscreen"></i></a></li>
+          <li class="nav-item d-none d-lg-block ">
+            <a class="nav-link nav-link-expand">
+              <i class="ficon bx bx-fullscreen" data-toggle="tooltip" data-placement="bottom" data-original-title="Maximizar"></i>
+            </a>
+          </li>
           <li class="nav-item nav-search">              
             <div class="custom-control custom-switch  nav-link nav-link-search mt-1">
               
               <input type="checkbox" class="custom-control-input"  id="dark-mode">
-              <label class="custom-control-label" for="dark-mode">
+              <label class="custom-control-label" for="dark-mode" data-toggle="tooltip" data-placement="bottom" data-original-title="Cambiar modo claro/oscuro">
                 <span class="switch-icon-left"><i class="bx bx-moon"></i></span>
                 <span class="switch-icon-right"><i class="bx bx-sun"></i></span>
               </label>
@@ -60,7 +64,7 @@ data-bgcolor="@if(isset($configData['navbarBgColor'])){{$configData['navbarBgCol
                 <i class="bx bx-user mr-50"></i> PERFIL
               </a>
               <a class="dropdown-item" href="{{route('account-setting')}}">
-                <i class="bx bx-cog mr-50"></i> CONFIGURAR
+                <i class="bx bx-cog mr-50"></i> CONFIGURACIÓN
               </a>
               <div class="dropdown-divider mb-0"></div>
               <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();

@@ -56,4 +56,11 @@ class PresencialWorkController extends Controller
         return view('presencials.attendance-list',compact('events'));
     }
 
+    public function myattendance(){
+        
+        return view('presencials.myattendance');
+        
+
+    }
+
 }

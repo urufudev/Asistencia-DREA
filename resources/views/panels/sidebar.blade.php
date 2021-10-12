@@ -99,14 +99,14 @@
           </ul>
         </li>
         @endcan
-        @can('viewAny', 'Models\Laboral')
+        @can('viewAny', 'Models\User')
         <li class="nav-item  ">
           <a href="#">
             <i class="menu-livicon" data-icon="users"></i>                   
             <span class="menu-title">Usuarios</span>
           </a>
           <ul class="menu-content">
-              @can('create', 'Models\Laboral')
+              @can('create', 'Models\User')
                 <li {{(request()->is('users/create')) ? 'class=active' : '' }}>
                   <a href="{{route('users.create')}}">
                     <i class="bx bx-right-arrow-alt"></i>
@@ -114,7 +114,7 @@
                   </a>
                 </li>
                 @endcan
-                @can('viewAny', 'Models\Laboral')
+                @can('viewAny', 'Models\User')
                 <li {{(request()->is('users')) ? 'class=active' : '' }}>
                   <a href="{{route('users.index')}}">
                     <i class="bx bx-right-arrow-alt"></i>

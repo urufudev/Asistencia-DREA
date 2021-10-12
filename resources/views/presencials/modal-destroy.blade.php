@@ -1,4 +1,4 @@
-<div class="modal fade text-left" id="modal-destroy-{{$presencial->id}}" tabindex="-1" role="dialog"
+<div wire:ignore.self class="modal fade text-left" id="modal-destroy-{{$presencial->id}}" tabindex="-1" role="dialog"
     aria-labelledby="myModalLabel120" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
       <div class="modal-content">

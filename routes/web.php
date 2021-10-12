@@ -1,5 +1,7 @@
 <?php
 
+use App\Mail\ConfirmEventMailable;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\HomeController;
@@ -15,6 +17,7 @@ use App\Http\Controllers\PositionController;
 use App\Http\Controllers\ConditionController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PresencialWorkController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -42,6 +45,7 @@ Route::middleware(['auth'])->group(function () {
 
      Route::get('/profile',  [ProfileController::class, 'index'])->name('profile');
      Route::get('/account-setting', [ProfileController::class, 'setting'])->name('account-setting');
+     Route::get('/users/{user}/edit-profile', [ProfileController::class, 'editProfile'])->name('edit-profile');
      Route::put('/account-setting/{user}',[ProfileController::class, 'updateInfo'])->name('account-setting.updateInfo');
      
      Route::put('/update-laboral/{user}',[ProfileController::class, 'updateLaboralInfo'])->name('account-setting.updateLaboralInfo');
@@ -49,6 +53,7 @@ Route::middleware(['auth'])->group(function () {
      Route::put('/update-address/{user}',[ProfileController::class, 'updateAddress'])->name('account-setting.updateAddress');
 
      Route::put('/update-password/{user}',[ProfileController::class, 'updatePassword'])->name('account-setting.updatePassword');
+     Route::put('/update-vaccine/{user}',[ProfileController::class, 'updateVaccineInfo'])->name('account-setting.updateVaccine');
 
      Route::resource('laborals',LaboralController::class)->except(['show']);
      Route::resource('offices',OfficeController::class)->except(['show']);
@@ -67,8 +72,16 @@ Route::middleware(['auth'])->group(function () {
 
 
      Route::get('/events/{event}/attendance', [PresencialWorkController::class, 'attendance'])->name('attendance');
+
+     Route::get('/myattendance', [PresencialWorkController::class,'myattendance',])->name('myattendance');
      
 
+   
+     /* Route::get('/mail', function () {
+          $correo = new ConfirmEventMailable;
+          Mail::to('yimydavidhc@gmail.com')->send($correo);
+          return 'enviado';
+      }); */
 
      Route::get('wizard', [FormController::class, 'formWizard'])->name('form-wizard');
      //Roles

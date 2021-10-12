@@ -98,6 +98,11 @@
                           <i class="bx bx-edit"></i>
                         </a>
                        @endcan 
+                       @can('update', $user)    
+                       <a href="{{route('edit-profile',$user->id)}}" class="btn btn-icon btn-secondary" data-toggle="tooltip" data-placement="top" data-original-title="Editar Perfil">
+                           <i class="bx bx-user-circle"></i>
+                         </a>
+                        @endcan 
                         @can('forceDelete', $user)  
                         <a style="cursor:pointer" data-target="#modal-delete-{{$user->id}}" data-toggle="modal" class="btn btn-icon btn-danger" data-placement="top" data-toggle="tooltip" title="Eliminar" >
                           <i class="bx bx-trash-alt white"></i>

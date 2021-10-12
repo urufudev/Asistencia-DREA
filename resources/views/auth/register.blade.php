@@ -106,11 +106,11 @@
                       <label class="d-block">SEXO</label>
                       <div class="custom-control-inline">
                         <div class="radio mr-1">
-                          <input type="radio" name="genre" id="MASCULINO" value="MASCULINO" >
+                          <input type="radio" name="genre" id="MASCULINO" value="MASCULINO" {{ old('genre')=="MASCULINO" ? 'checked' : '' }}>
                           <label for="MASCULINO">MASCULINO</label>
                         </div>
                         <div class="radio">
-                          <input type="radio" name="genre" id="FEMENINO" value="FEMENINO" >
+                          <input type="radio" name="genre" id="FEMENINO" value="FEMENINO" {{ old('genre')=="FEMENINO" ? 'checked' : '' }}>
                           <label for="FEMENINO">FEMENINO</label>
                         </div>
                       </div>
@@ -184,6 +184,16 @@
             
                 </div>
               </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">Datos de Vacuna</h4>
+          </div>
+          <div class="card-body">
+            @livewire('profile.vaccine')
+              
           </div>
         </div>
 

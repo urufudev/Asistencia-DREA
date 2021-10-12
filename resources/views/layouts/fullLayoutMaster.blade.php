@@ -36,7 +36,8 @@
 </script>
   <!-- BEGIN: Body-->
   <body style="background-image: url({{asset('images/backgrounds/background.svg')}}); overflow: auto;" class="vertical-layout 1-column navbar-sticky footer-static blank-page light-layout pace-done menu-hide" class="vertical-layout 1-column navbar-sticky {{$configData['bodyCustomClass']}} footer-static blank-page
-  @if($configData['theme'] === 'dark'){{'dark-layout'}} @elseif($configData['theme'] === 'semi-dark'){{'semi-dark-layout'}} @else {{'light-layout'}} @endif " data-open="click" data-menu="vertical-menu-modern" data-col="1-column" data-framework="laravel">
+  @if($configData['theme'] === 'dark'){{'dark-layout'}} @elseif($configData['theme'] === 'semi-dark'){{'semi-dark-layout'}} @else {{'light-layout'}} @endif " 
+  data-open="click" data-menu="vertical-menu-modern" data-col="1-column" data-framework="laravel">
     <!-- BEGIN: Content-->
     <div class="app-content content">
       <div class="content-overlay"></div>

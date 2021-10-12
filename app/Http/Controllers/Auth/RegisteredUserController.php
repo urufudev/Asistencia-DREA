@@ -81,6 +81,9 @@ class RegisteredUserController extends Controller
         $profile->birthday = $request->birthday;
         $profile->genre = $request->genre;
         $profile->phone = $request->phone;
+        $profile->vaccine = $request->vaccine;
+        $profile->vaccine_first = $request->vaccine_first;
+        $profile->vaccine_second = $request->vaccine_second;
         $profile->department_id = $request->department_id;
         $profile->province_id = $request->province_id;
         $profile->district_id = $request->district_id;

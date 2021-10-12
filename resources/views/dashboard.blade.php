@@ -20,76 +20,187 @@
 <section id="widgets-Statistics">
   <div class="row">
     <div class="col-12 mt-1 mb-2 ">
-      <h2 class="text-capitalize">Hola {{ Auth::user()->name ?? 'Invitado'}} 😄,</h2>
+      <h2 class="text-capitalize">Hola {{ Auth::user()->name ?? 'Invitado'}} @if(Auth::user()->dni == 72830344) 😒 @else 😄 @endif,</h2>
       <h1>Bienvenido de nuevo 👋</h1>
       <hr>
     </div>
   </div>
-  <div class="row d-none d-md-flex d-xl-flex">
-    <div class="col-xl-2 col-md-4 col-sm-6">
-      <div class="card text-center">
-        <div class="card-body">
-          <div class="badge-circle badge-circle-lg badge-circle-light-info mx-auto my-1">
-            <i class="bx bx-group font-medium-5"></i>
+  <div class="row">
+    <div class="col-8">
+      <div class="row d-none d-md-flex d-xl-flex">
+        <div class="col-xl-4 col-md-4 col-sm-6">
+          <div class="card text-center">
+            <div class="card-body">
+              <div class="badge-circle badge-circle-lg badge-circle-light-info mx-auto my-1">
+                <i class="bx bx-group font-medium-5"></i>
+              </div>
+              <p class="text-muted mb-0 line-ellipsis">Trabajadores</p>
+              <h2 class="mb-0">{{$users->count()}}</h2>
+            </div>
           </div>
-          <p class="text-muted mb-0 line-ellipsis">Trabajadores</p>
-          <h2 class="mb-0">{{$users->count()}}</h2>
         </div>
-      </div>
-    </div>
-    <div class="col-xl-2 col-md-4 col-sm-6">
-      <div class="card text-center">
-        <div class="card-body">
-          <div class="badge-circle badge-circle-lg badge-circle-light-warning mx-auto my-1">
-            <i class="bx bx-building-house font-medium-5"></i>
+        <div class="col-xl-4 col-md-4 col-sm-6">
+          <div class="card text-center">
+            <div class="card-body">
+              <div class="badge-circle badge-circle-lg badge-circle-light-warning mx-auto my-1">
+                <i class="bx bx-building-house font-medium-5"></i>
+              </div>
+              <p class="text-muted mb-0 line-ellipsis">Oficinas</p>
+              <h2 class="mb-0">{{$offices->count()}}</h2>
+            </div>
           </div>
-          <p class="text-muted mb-0 line-ellipsis">Oficinas</p>
-          <h2 class="mb-0">{{$offices->count()}}</h2>
         </div>
-      </div>
-    </div>
-    <div class="col-xl-2 col-md-4 col-sm-6">
-      <div class="card text-center">
-        <div class="card-body">
-          <div class="badge-circle badge-circle-lg badge-circle-light-danger mx-auto my-1">
-            <i class="bx bx-sitemap font-medium-5"></i>
+        <div class="col-xl-4 col-md-4 col-sm-6">
+          <div class="card text-center">
+            <div class="card-body">
+              <div class="badge-circle badge-circle-lg badge-circle-light-danger mx-auto my-1">
+                <i class="bx bx-sitemap font-medium-5"></i>
+              </div>
+              <p class="text-muted mb-0 line-ellipsis">Cargos</p>
+              <h2 class="mb-0">{{$positions->count()}}</h2>
+            </div>
           </div>
-          <p class="text-muted mb-0 line-ellipsis">Cargos</p>
-          <h2 class="mb-0">{{$positions->count()}}</h2>
         </div>
-      </div>
-    </div>
 
-    <div class="col-xl-2 col-md-4 col-sm-6">
-      <div class="card text-center">
-        <div class="card-body">
-          <div class="badge-circle badge-circle-lg badge-circle-light-primary mx-auto my-1">
-            <i class="bx bx-briefcase-alt-2 font-medium-5"></i>
-          </div>
-          <p class="text-muted mb-0 line-ellipsis">Régimen Laboral</p>
-          <h2 class="mb-0">{{$laborals->count()}}</h2>
-        </div>
       </div>
-    </div>
-    <div class="col-xl-2 col-md-4 col-sm-6">
-      <div class="card text-center">
-        <div class="card-body">
-          <div class="badge-circle badge-circle-lg badge-circle-light-success mx-auto my-1">
-            <i class="bx bx-purchase-tag font-medium-5"></i>
+      {{-- <div class="row d-none d-md-flex d-xl-flex">
+        <div class="col-xl-2 col-md-4 col-sm-6">
+          <div class="card text-center">
+            <div class="card-body">
+              <div class="badge-circle badge-circle-lg badge-circle-light-info mx-auto my-1">
+                <i class="bx bx-group font-medium-5"></i>
+              </div>
+              <p class="text-muted mb-0 line-ellipsis">Trabajadores</p>
+              <h2 class="mb-0">{{$users->count()}}</h2>
+            </div>
           </div>
-          <p class="text-muted mb-0 line-ellipsis">Condición Laboral</p>
-          <h2 class="mb-0">{{$conditions->count()}}</h2>
         </div>
-      </div>
-    </div>
-    <div class="col-xl-2 col-md-4 col-sm-6">
-      <div class="card text-center">
-        <div class="card-body">
-          <div class="badge-circle badge-circle-lg badge-circle-light-danger mx-auto my-1">
-            <i class="bx bx-money font-medium-5"></i>
+        <div class="col-xl-2 col-md-4 col-sm-6">
+          <div class="card text-center">
+            <div class="card-body">
+              <div class="badge-circle badge-circle-lg badge-circle-light-warning mx-auto my-1">
+                <i class="bx bx-building-house font-medium-5"></i>
+              </div>
+              <p class="text-muted mb-0 line-ellipsis">Oficinas</p>
+              <h2 class="mb-0">{{$offices->count()}}</h2>
+            </div>
           </div>
-          <p class="text-muted mb-0 line-ellipsis">Régimen Pensionario</p>
-          <h2 class="mb-0">{{$pensions->count()}}</h2>
+        </div>
+        <div class="col-xl-2 col-md-4 col-sm-6">
+          <div class="card text-center">
+            <div class="card-body">
+              <div class="badge-circle badge-circle-lg badge-circle-light-danger mx-auto my-1">
+                <i class="bx bx-sitemap font-medium-5"></i>
+              </div>
+              <p class="text-muted mb-0 line-ellipsis">Cargos</p>
+              <h2 class="mb-0">{{$positions->count()}}</h2>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-2 col-md-4 col-sm-6">
+          <div class="card text-center">
+            <div class="card-body">
+              <div class="badge-circle badge-circle-lg badge-circle-light-primary mx-auto my-1">
+                <i class="bx bx-briefcase-alt-2 font-medium-5"></i>
+              </div>
+              <p class="text-muted mb-0 line-ellipsis">Régimen Laboral</p>
+              <h2 class="mb-0">{{$laborals->count()}}</h2>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-2 col-md-4 col-sm-6">
+          <div class="card text-center">
+            <div class="card-body">
+              <div class="badge-circle badge-circle-lg badge-circle-light-success mx-auto my-1">
+                <i class="bx bx-purchase-tag font-medium-5"></i>
+              </div>
+              <p class="text-muted mb-0 line-ellipsis">Condición Laboral</p>
+              <h2 class="mb-0">{{$conditions->count()}}</h2>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-2 col-md-4 col-sm-6">
+          <div class="card text-center">
+            <div class="card-body">
+              <div class="badge-circle badge-circle-lg badge-circle-light-danger mx-auto my-1">
+                <i class="bx bx-money font-medium-5"></i>
+              </div>
+              <p class="text-muted mb-0 line-ellipsis">Régimen Pensionario</p>
+              <h2 class="mb-0">{{$pensions->count()}}</h2>
+            </div>
+          </div>
+        </div>
+      </div> --}}
+      {{-- <div class="row d-none d-md-flex d-xl-flex">
+
+        <div class="col-xl-4 col-md-4 col-sm-6">
+          <div class="card text-center">
+            <div class="card-body">
+              <div class="badge-circle badge-circle-lg badge-circle-light-primary mx-auto my-1">
+                <i class="bx bx-briefcase-alt-2 font-medium-5"></i>
+              </div>
+              <p class="text-muted mb-0 line-ellipsis">Régimen Laboral</p>
+              <h2 class="mb-0">{{$laborals->count()}}</h2>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-4 col-md-4 col-sm-6">
+          <div class="card text-center">
+            <div class="card-body">
+              <div class="badge-circle badge-circle-lg badge-circle-light-success mx-auto my-1">
+                <i class="bx bx-purchase-tag font-medium-5"></i>
+              </div>
+              <p class="text-muted mb-0 line-ellipsis">Condición Laboral</p>
+              <h2 class="mb-0">{{$conditions->count()}}</h2>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-4 col-md-4 col-sm-6">
+          <div class="card text-center">
+            <div class="card-body">
+              <div class="badge-circle badge-circle-lg badge-circle-light-danger mx-auto my-1">
+                <i class="bx bx-money font-medium-5"></i>
+              </div>
+              <p class="text-muted mb-0 line-ellipsis">Régimen Pensionario</p>
+              <h2 class="mb-0">{{$pensions->count()}}</h2>
+            </div>
+          </div>
+        </div>
+      </div> --}}
+    </div>
+    <div class="col-lg-4">
+      <div class="card widget-notification">
+        <div class="card-header border-bottom">
+          <h4 class="card-title d-flex align-items-center">
+            <i class='bx bx-bell font-medium-4 mr-1'></i>Cumpleaños del mes</h4>
+          <div class="heading-elements">
+            <button type="button" class="btn btn-light-primary text-capitalize">{{Carbon\Carbon::now()->isoFormat('MMMM')}}</button>
+          </div>
+        </div>
+        <div class="card-body p-0">
+          <ul class="list-group list-group-flush">
+            @foreach ($profilebirthdays as $profilebirthday)
+            <li
+            class="list-group-item list-group-item-action border-0 d-flex align-items-center justify-content-between">
+            <div class="list-left d-flex">
+              <div class="list-icon mr-1">
+                <div class="avatar bg-rgba-primary m-0 p-25">
+                  <div class="avatar-content">
+                    <i class="bx bx-cake text-primary font-medium-5"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="list-content">
+                <span class="list-title">{{$profilebirthday->user->full_name}}</span>
+                <small class="text-muted d-block text-capitalize">{{$profilebirthday->birthday->isoFormat('D MMMM')}}</small>
+              </div>
+            </div>
+          </li>
+            @endforeach
+            
+            
+          </ul>
         </div>
       </div>
     </div>
@@ -108,17 +219,7 @@
 
   <div class="row ">
     <div class="col-lg-4 col-md-4">
-      {{-- <div class="card">
-        <div class="card-header d-flex justify-content-between align-items-center border-bottom">
-          <h4 class="card-title">Registro de Trabajo Presencial</h4>
-          <i class="bx bx-dots-vertical-rounded font-medium-3 cursor-pointer"></i>
-        </div>
-        <div class="card-body">
-          
-          
 
-        </div>
-      </div> --}}
       <div class="card  kb-hover-1">
         <div class="row no-gutters">
           <div class="col-lg-4 col-md-12 d-flex align-items-center justify-content-center p-1">
@@ -136,6 +237,27 @@
         </div>
       </div>
     </div>
+    @if(Auth::user()->profile->vaccine == null)
+    <div class="col-lg-4 col-md-4">
+
+      <div class="card  kb-hover-2">
+        <div class="row no-gutters">
+          <div class="col-lg-4 col-md-12 d-flex align-items-center justify-content-center p-1">
+            <i  class="livicon-evo"
+              data-options="name: dropper.svg; size: 80px; strokeColorAlt: #FDAC41; strokeColor: #5A8DEE; style: lines-alt; eventOn: .kb-hover-2;">
+            </i>
+          </div>
+          <div class="col-lg-8 col-md-12">
+            <div class="card-body text-center">
+              <h4 class="card-title ">Información de Vacuna</h4>
+              <p class="card-text ">Click para actualizar los datos de tu vacunación</p>
+              <a href="{{route('account-setting')}}" class="btn btn-secondary">Ver</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    @endif
 
     {{-- <div class="col-lg-6 col-md-6">
       <div class="card">
@@ -859,7 +981,7 @@
 @section('page-scripts')
 {{-- <script src="{{asset('js/scripts/cards/widgets.js')}}"></script>
  --}}
- <script src="{{asset('js/scripts/pages/dashboard-ecommerce.js')}}"></script>
+{{--  <script src="{{asset('js/scripts/pages/dashboard-ecommerce.js')}}"></script> --}}
  {{ $chart->script() }}
  {{ $chart_office->script() }}
  {{-- {!! $chart->script() !!} --}}

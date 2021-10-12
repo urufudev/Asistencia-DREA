@@ -11,6 +11,7 @@ use App\Models\Position;
 use App\Models\Condition;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\Profile\UpdatePasswordRequest;
 
@@ -21,6 +22,7 @@ class ProfileController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
         $user=Auth::user();
@@ -48,7 +50,45 @@ class ProfileController extends Controller
         $tab = 'personal-info';
 
         $user = Auth::user();
+        
 
+        $offices=Office::orderBy('name','ASC')
+        ->where('status','=','ACTIVO')   
+        ->pluck('name','id');
+
+        $laborals=Laboral::orderBy('name','ASC')
+        ->where('status','=','ACTIVO')   
+        ->pluck('name','id');
+
+        $pensions=Pension::orderBy('name','ASC')
+        ->where('status','=','ACTIVO')   
+        ->pluck('name','id');
+
+        $positions=Position::orderBy('name','ASC')
+        ->where('status','=','ACTIVO')   
+        ->pluck('name','id');
+
+        $conditions=Condition::orderBy('name','ASC')
+        ->where('status','=','ACTIVO')   
+        ->pluck('name','id');
+
+        return view('profile.setting',compact('pageConfigs','breadcrumbs','tab','user','offices','laborals','pensions','positions','conditions'));
+    }
+
+    public function editProfile(User $user)
+    {
+        Gate::authorize('edit', 'Models\User');
+        $pageConfigs = ['pageHeader' => true];
+        $breadcrumbs = [
+            ["link" => "/dashboard", "name" => "Home"],
+            ["link"=> "/users","name" => "Usuarios"],
+            ["name" => "Editar Perfil de Usuario"]
+        ];
+
+        $tab = 'personal-info';
+
+        /* $user = Auth::user(); */
+ 
         $offices=Office::orderBy('name','ASC')
         ->where('status','=','ACTIVO')   
         ->pluck('name','id');
@@ -99,6 +139,26 @@ class ProfileController extends Controller
             'password' => Hash::make( request('password'))
         ]);
         return back()->with('success', 'La contraseña se cambió con exitó.');
+
+    }
+
+    public function updateVaccineInfo(Request $request, User $user)
+    {
+        
+       
+        if($request->vaccine == 'NO')
+        {
+            $user->update($request->all());
+            $user->profile->update(['vaccine' => $request->vaccine,'vaccine_first'=>null,'vaccine_second' =>null]);
+        }
+        elseif($request->vaccine == 'SI')
+        {
+            $user->update($request->all());
+            $user->profile->update($request->all());
+        }
+        
+
+        return back()->with('success', 'Actualizado con exito.');
 
     }
 

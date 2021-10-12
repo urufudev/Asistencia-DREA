@@ -2,10 +2,9 @@
 
 namespace App\Http\Livewire\Presencials;
 
-use App\Http\Requests\Presencial\StoreRequest;
 use Carbon\Carbon;
-
 use App\Models\Event;
+
 use Livewire\Component;
 use Illuminate\Http\Request;
 use Livewire\WithPagination;
@@ -13,7 +12,9 @@ use App\Models\PresencialWork;
 use PhpParser\Node\Expr\Empty_;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-
+use Illuminate\Support\Facades\Mail;
+use App\Http\Requests\Presencial\StoreRequest;
+use App\Mail\ConfirmEventMailable;
 
 class Table extends Component
 {
@@ -286,6 +287,11 @@ class Table extends Component
             
             /* dd($this->feber); */
             /* $presencial->save(); */
+            $user = Auth::user();
+            $event = $presencial;
+
+            Mail::to($user)->send(new ConfirmEventMailable($user, $event));
+
     
             $url="?perPage={$this->perPage}&page={$this->page}&search={$this->search}";
                 session()->flash('success', 'Te registraste correctamente.');

@@ -33,7 +33,13 @@
                     <div class="card-title-details d-flex align-items-center">
                       
                       <div>
-                        <h5><a @can('view', $presencial)href="{{route('events.show',$presencial->id)}}" @endcan>{{$presencial->id}} | {{ $presencial->name }}</a> </h5>
+                        <a @can('view', $presencial)href="{{route('events.show',$presencial->id)}}" @endcan class="text-uppercase"> 
+                          <h5  class="brand-text">
+                            
+                            {{ $presencial->date->isoFormat('dddd') }} | {{ $presencial->name }}
+                            
+                          </h5>
+                        </a> 
                         {{-- @can('view', $presencial)    
                           <a href="{{route('events.show',$presencial->id)}}" class="btn btn-icon btn-info" data-toggle="tooltip" data-placement="top" data-original-title="Ver">
                           <i class="bx bx-show"></i>

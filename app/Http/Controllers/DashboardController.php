@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Office;
 use App\Models\Laboral;
@@ -9,8 +10,8 @@ use App\Models\Pension;
 use App\Models\Profile;
 use App\Models\Position;
 use App\Models\Condition;
-use Illuminate\Http\Request;
 
+use Illuminate\Http\Request;
 use ArielMejiaDev\LarapexCharts\Facades\LarapexChart;
 
 class DashboardController extends Controller
@@ -98,7 +99,22 @@ class DashboardController extends Controller
         ->setDataLabels()
         ->setLabels($office_names);
 
-        return view('dashboard',compact('chart','chart_office','offices','users','positions','laborals','conditions','pensions'));
+        /* --- Cumpleaños */
+        $date = Carbon::now();
+
+        $userbirthdays = User::whereHas('profile', function ($query) {
+            $query->whereMonth('birthday',Carbon::now()->month);
+           
+        })->get()->sortBy('profile.birthday');;  /* ->take(5)->get() */
+
+        $profilebirthdays = Profile::with('user')
+        ->whereMonth('birthday',Carbon::now()->month)
+        ->orderBy('birthday','asc')
+        ->get();
+        
+        /* dd($profilebirthdays); */
+
+        return view('dashboard',compact('chart','chart_office','profilebirthdays','offices','users','positions','laborals','conditions','pensions'));
     }
     //ecommerce
     public function dashboardEcommerce(){

@@ -45,10 +45,20 @@
             <li class="nav-item">
                 <a class="nav-link d-flex align-items-center" id="account-pill-social" data-toggle="pill"
                     href="#account-vertical-social" aria-expanded="false">
-                    <i class="bx bxs-map"></i>
+                    <i class="bx bx-map-pin"></i>
                     <span>Dirección</span>
                 </a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link d-flex align-items-center" id="account-pill-vaccine" data-toggle="pill"
+                  href="#account-vertical-vaccine" aria-expanded="false">
+                  <i class="bx bx-first-aid"></i>
+                  <span>Información de Vacunación</span>
+                  @if(Auth::user()->profile->vaccine == null)
+                  <div class="badge badge-pill badge-glow badge-danger">Actualizar</div>
+                  @endif
+              </a>
+          </li>
 
           </ul>
         </div>
@@ -92,6 +102,15 @@
                         {!! Form::model($user,['route'=>['account-setting.updateAddress', $user],'method'=>'PUT']) !!}
                                 
                         @include('profile.partials.address')
+    
+                        {!! Form::close() !!} 
+                    </div>
+
+                    <div class="tab-pane fade " id="account-vertical-vaccine" role="tabpanel"
+                        aria-labelledby="account-pill-vaccine" aria-expanded="false">
+                        {!! Form::model($user,['route'=>['account-setting.updateVaccine', $user],'method'=>'PUT']) !!}
+                                
+                        @include('profile.partials.vaccine-info')
     
                         {!! Form::close() !!} 
                     </div>

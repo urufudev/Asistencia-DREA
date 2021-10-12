@@ -4,12 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Office;
+use App\Models\Laboral;
+use App\Models\Pension;
 use App\Models\Profile;
+use App\Models\Position;
+use App\Models\Condition;
+use Jenssegers\Date\Date;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use App\Http\Requests\User\StoreRequest;
 use App\Http\Requests\User\UpdateRequest;
-use Jenssegers\Date\Date;
 
 class UserController extends Controller
 {
@@ -47,8 +51,26 @@ class UserController extends Controller
         $offices=Office::orderBy('name','ASC')
         ->where('status','=','ACTIVO')   
         ->pluck('name','id');
+
+        $laborals=Laboral::orderBy('name','ASC')
+        ->where('status','=','ACTIVO')   
+        ->pluck('name','id');
+
+        $pensions=Pension::orderBy('name','ASC')
+        ->where('status','=','ACTIVO')   
+        ->pluck('name','id');
+
+        $positions=Position::orderBy('name','ASC')
+        ->where('status','=','ACTIVO')   
+        ->pluck('name','id');
+
+        $conditions=Condition::orderBy('name','ASC')
+        ->where('status','=','ACTIVO')   
+        ->pluck('name','id');
+
+        
         $roles = Role::get();
-        return view('users.create',compact('offices','roles','pageConfigs','breadcrumbs'));
+        return view('users.create',compact('offices','laborals','pensions','positions','conditions','roles','pageConfigs','breadcrumbs'));
     }
 
     /**
@@ -137,9 +159,27 @@ class UserController extends Controller
         $offices=Office::orderBy('name','ASC')
         ->where('status','=','ACTIVO')   
         ->pluck('name','id');
+
+        $laborals=Laboral::orderBy('name','ASC')
+        ->where('status','=','ACTIVO')   
+        ->pluck('name','id');
+
+        $pensions=Pension::orderBy('name','ASC')
+        ->where('status','=','ACTIVO')   
+        ->pluck('name','id');
+
+        $positions=Position::orderBy('name','ASC')
+        ->where('status','=','ACTIVO')   
+        ->pluck('name','id');
+
+        $conditions=Condition::orderBy('name','ASC')
+        ->where('status','=','ACTIVO')   
+        ->pluck('name','id');
+
+
         $roles = Role::get();
 
-        return view('users.edit',compact('user','offices','roles','pageConfigs','breadcrumbs'));
+        return view('users.edit',compact('offices','laborals','pensions','positions','conditions','user','roles','pageConfigs','breadcrumbs'));
     }
 
     /**

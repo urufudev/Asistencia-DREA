@@ -22,6 +22,9 @@ class CreateProfilesTable extends Migration
             $table->enum('genre',['MASCULINO','FEMENINO'])->nullable();
             $table->string('phone')->nullable();
             
+            $table->enum('vaccine',['SI','NO'])->nullable();
+            $table->date('vaccine_first')->nullable();
+            $table->date('vaccine_second')->nullable();
             
             $table->bigInteger('department_id')->unsigned()->nullable();
             $table->bigInteger('province_id')->unsigned()->nullable();

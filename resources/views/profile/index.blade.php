@@ -34,9 +34,8 @@
               alt="user profile image" height="140" width="140">
           </div>
           <div class="user-profile-text">
-            <h5 class="mb-0 text-bold-500 profile-text-color">{{$user->full_namea}}</h5>
-            
-            <small class="d-md-block d-none">{{$user->profile->position->name ?? 'Sin cargo'}}</small>
+            <h4 class="mb-0 text-bold-500 profile-text-color">{{$user->name}}</h4>
+            <small>{{ Str::limit($user->ap_paterno .' '. $user->ap_materno,17)}}</small>
             
           </div>
           <!-- user profile nav tabs start -->
@@ -48,18 +47,18 @@
               role="tablist">
               <li class="nav-item mb-0">
                 <a class=" nav-link d-flex px-1 active" id="profile-tab" data-toggle="tab" href="#profile"
-                  aria-controls="profile" role="tab" aria-selected="true"><i class="bx bx-copy-alt"></i><span
+                  aria-controls="profile" role="tab" aria-selected="true"><i class="bx bx-id-card"></i><span
                   class="d-none d-md-block"> Perfil</span></a>
               </li>
               <li class="nav-item mb-0">
                 <a class="nav-link d-flex px-1" id="friends-tab" data-toggle="tab" href="#friends"
-                  aria-controls="friends" role="tab" aria-selected="false"><i class="bx bx-message-alt"></i><span
+                  aria-controls="friends" role="tab" aria-selected="false"><i class="bx bx-group"></i><span
                   class="d-none d-md-block"> Compañeros</span></a>
               </li>
 
               <li class="nav-item mb-0">
-                <a class="nav-link d-flex px-1" href="{{route('account-setting')}}"
-                  ><i class="bx bx-user"></i><span
+                <a class="nav-link d-flex px-1" href="{{route('account-setting')}}" 
+                  ><i class="bx bx-slider-alt"></i><span
                   class="d-none d-md-block"> Editar Perfil</span></a>
               </li>
               
@@ -105,7 +104,11 @@
                                 <div class="avatar mr-1">
                                   <img src="{{$userp->profile->photo ?? 'https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=Sin+Foto'}}" alt="avtar images"
                                     width="32" height="32">
-                                  <span class="avatar-status-online"></span>
+                                    @if ($userp->profile->vaccine == null)
+                                    <span class="avatar-status-busy"></span>
+                                    @else
+                                    <span class="avatar-status-online"></span>
+                                    @endif
                                 </div>
                               </a>
                               <div class="media-body">

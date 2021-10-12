@@ -16,9 +16,13 @@ class Profile extends Model
     use HasFactory;
 
     protected $fillable=[
-        'photo','birthday','genre','phone','address','department_id','province_id','district_id','laboral_id','pension_id','position_id',
+        'photo','birthday','genre','phone','vaccine','vaccine_first','vaccine_second',
+        'address','department_id',
+        'province_id','district_id','laboral_id','pension_id','position_id',
         'condition_id'
     ];
+
+    protected $dates = ['birthday','vaccine_first', 'vaccine_second']; 
 
     public function getBirthdayDateAttribute()
     {
