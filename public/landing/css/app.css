@@ -90,9 +90,48 @@ a {
   text-decoration: none;
 }
 
+.upload__tooltip {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  width: 56px;
+  border-radius: 6px;
+  background: #1B1D21;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 28px;
+  color: #ffffff;
+}
+
+.upload__tooltip:before {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
+  width: 0px;
+  height: 0px;
+  border-style: solid;
+  border-width: 4px 4px 0 4px;
+  border-color: #1B1D21 transparent transparent transparent;
+}
+
 a,
 button {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.emoji {
+  font-family: "Segoe UI Emoji";
+}
+
+.demo__icon {
+  position: inline;
+  font-size: 48px;
+  font-weight: 500;
+  line-height: (62/48); 
 }
 
 .icon-arrow-down {

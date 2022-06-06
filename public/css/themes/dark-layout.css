@@ -1398,7 +1398,8 @@ body.dark-layout .table tbody th .badge-circle-light-secondary {
 
 body.dark-layout .table tbody td a i,
 body.dark-layout .table tbody th a i {
-  color: #8a99b5 !important;
+ /*  color: #8a99b5 !important; */
+  color: #FFFFFF !important;
 }
 
 body.dark-layout .table tbody tr.group {

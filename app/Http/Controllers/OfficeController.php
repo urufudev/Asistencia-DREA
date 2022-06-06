@@ -70,7 +70,14 @@ class OfficeController extends Controller
      */
     public function show(Office $office)
     {
-        //
+        $pageConfigs = ['pageHeader' => true];
+        $breadcrumbs = [
+            ["link" => "/dashboard", "name" => "Home"],
+            ["link"=> "/offices","name" => "Lista de Oficinas"],
+            ["name" => "Ver"]
+        ];
+
+        return view('offices.show',compact('office','pageConfigs','breadcrumbs'));
     }
 
     /**

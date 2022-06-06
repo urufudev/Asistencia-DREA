@@ -132,7 +132,7 @@
 
                   <div class="col-6">
                     <div class="form-group">
-                      <label class="form-label">Cotraseña</label>
+                      <label class="form-label">Contraseña</label>
                       <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" value="{{old('password')}}"  autocomplete="off" required>
                       @error('password')
                           <div class="text-danger fs-15">{{$message}}</div>
@@ -142,7 +142,7 @@
 
                   <div class="col-6">
                     <div class="form-group">
-                      <label class="form-label">Confirmar Cotraseña</label>
+                      <label class="form-label">Confirmar Contraseña</label>
                       <input type="password" class="form-control @error('password') is-invalid @enderror" name="password_confirmation" value="{{old('password_confirmation')}}"  autocomplete="off" required>
                       @error('password_confirmation')
                           <div class="text-danger fs-15">{{$message}}</div>

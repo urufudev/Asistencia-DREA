@@ -1,6 +1,9 @@
 
-    <!-- BEGIN: Vendor JS-->
-    <script>
+   @livewireScripts
+   
+   <!-- BEGIN: Vendor JS-->
+   
+   <script>
         var assetBaseUrl = "{{ asset('') }}";
     </script>
     <script src="{{asset('vendors/js/vendors.min.js')}}"></script>
@@ -38,7 +41,7 @@
       });
     </script>
     
-    @livewireScripts
+    
 
     <script type="text/javascript">
         function showTime() {

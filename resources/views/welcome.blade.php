@@ -4,6 +4,7 @@
    <head>
       <meta charset="utf-8">
       <title>Sistema de Administración de Personal | DREA</title>
+      <meta name="description" content="Registro de Asistencia de Trabajo Presencial para trabajadores de la Dirección Regional de Educación de Ayacucho" />
       <meta http-equiv="X-UA-Compatible" content="IE=Edge">
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
       <meta name="theme-color" content="#fff">
@@ -73,8 +74,10 @@
                <div class="main__wrap">
                   <h1 class="main__title d1"><span data-aos="animation-scale-top" data-aos-duration="600">Sistema de</span>
                      <span data-aos="animation-scale-top" data-aos-duration="600" data-aos-delay="200">Administración </span>
-                     <span data-aos="animation-scale-top" data-aos-duration="600" data-aos-delay="400">de Personal.👋</span>
+                     <span data-aos="animation-scale-top" data-aos-duration="600" data-aos-delay="400">de Personal.👋 </span>
                   </h1>
+                  
+                  {{-- <span class="demo__icon">👋</span> --}}
                   <div class="main__text">Dirección Regional de Educación de Ayacucho.</div>
                   <div class="main__btns">
 
@@ -138,6 +141,7 @@
                </div>
             </div>
             <label class="switch js-switch-theme">
+               <div class="upload__tooltip">Oscuro</div>
                <input class="switch__input" type="checkbox" />
                <span class="switch__in">
                   <span class="switch__box"></span>

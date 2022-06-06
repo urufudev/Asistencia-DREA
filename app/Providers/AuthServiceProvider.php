@@ -22,6 +22,8 @@ class AuthServiceProvider extends ServiceProvider
         
         'Models\PresencialWork' => 'App\Policies\PresencialWorkPolicy',
         'Models\Event' => 'App\Policies\EventPolicy',
+
+        'Models\Infected' => 'App\Policies\InfectedPolicy',
         
         'Models\Position' => 'App\Policies\PositionPolicy',
         'Models\Role' => 'App\Policies\RolePolicy',

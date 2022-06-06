@@ -54,7 +54,7 @@
                   href="#account-vertical-vaccine" aria-expanded="false">
                   <i class="bx bx-first-aid"></i>
                   <span>Información de Vacunación</span>
-                  @if(Auth::user()->profile->vaccine == null)
+                  @if(Auth::user()->profile->vaccine == null || Auth::user()->profile->vaccine_second == null || Auth::user()->profile->vaccine_third == null)
                   <div class="badge badge-pill badge-glow badge-danger">Actualizar</div>
                   @endif
               </a>

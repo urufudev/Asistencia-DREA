@@ -55,15 +55,9 @@ class User extends Authenticatable
     {
         if ($this->birthday != null) {
             return Carbon::parse($this->birthday)->format('d/m/Y');
-        }
-        else{
+        } else {
             return 'Sin Datos';
         }
-    }
-
-    public function presencialworks()
-    {
-        return $this->hasMany(PresencialWork::class);
     }
 
     public function getFullNameAttribute()
@@ -75,10 +69,23 @@ class User extends Authenticatable
     {
         return "{$this->name} {$this->ap_paterno} {$this->ap_materno}";
     }
+
+    public function presencialworks()
+    {
+        return $this->hasMany(PresencialWork::class);
+    }
+
+
     public function profile()
     {
         return $this->hasOne(Profile::class);
     }
+
+    public function infected()
+    {
+        return $this->hasOne(Infected::class);
+    }
+
     public function office()
     {
         return $this->belongsTo(Office::class);
@@ -87,21 +94,22 @@ class User extends Authenticatable
     public function scopeSearch($query, $val)
     {
         return $query
-        /* ->whereHas('office', function ($q) use ($val) {
+            /* ->whereHas('office', function ($q) use ($val) {
             $q->where('name', 'LIKE', "%$val%")
                 ->orWhere('description', 'LIKE', "%$val%");
 
         }) */
-        ->where('users.name','like','%'.$val.'%')
-        ->Orwhere('ap_paterno','like','%'.$val.'%')
-        ->Orwhere('ap_materno','like','%'.$val.'%')
-        ->Orwhere('dni','like','%'.$val.'%')
-        ->Orwhere('of.name','like','%'.$val.'%');
-          
+            ->where('name', 'like', '%' . $val . '%')
+            ->Orwhere('ap_paterno', 'like', '%' . $val . '%')
+            ->Orwhere('ap_materno', 'like', '%' . $val . '%')
+            ->Orwhere('dni', 'like', '%' . $val . '%')
 
+            ->orWhereHas('office', function ($query) use ($val) {
+                $query->where('name', 'like', '%' . $val . '%');
+            });
     }
 
-        /**
+    /**
      * Send the password reset notification.
      *
      * @param  string  $token

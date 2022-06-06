@@ -80,6 +80,11 @@
                 </td>
                 <td class="text-bold-600 text-center">
                     <div class="btn-group" role="group" aria-label="Basic example">
+                      @can('show', $office)    
+                      <a href="{{route('offices.show',$office->id)}}" class="btn btn-icon btn-info" data-toggle="tooltip" data-placement="top" data-original-title="Ver">
+                          <i class="bx bx-show"></i>
+                        </a>
+                       @endcan 
                       @can('update', $office)    
                       <a href="{{route('offices.edit',$office->id)}}" class="btn btn-icon btn-success" data-toggle="tooltip" data-placement="top" data-original-title="Editar">
                           <i class="bx bx-edit"></i>

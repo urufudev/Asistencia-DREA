@@ -17,21 +17,21 @@ use App\Http\Requests\User\UpdateRequest;
 
 class UserController extends Controller
 {
-  public function __construct()
-  {
-      $this->authorizeResource(User::class, 'user');
-  }
+    public function __construct()
+    {
+        $this->authorizeResource(User::class, 'user');
+    }
 
-  
+
     public function index()
     {
         $pageConfigs = ['pageHeader' => true];
         $breadcrumbs = [
-            ["link" => "/dashboard", "name" => "Home"],["name" => "Usuarios"]
+            ["link" => "/dashboard", "name" => "Home"], ["name" => "Usuarios"]
         ];
-        
-    
-        return view('users.index',['pageConfigs'=>$pageConfigs,'breadcrumbs'=>$breadcrumbs]);
+
+
+        return view('users.index', ['pageConfigs' => $pageConfigs, 'breadcrumbs' => $breadcrumbs]);
     }
 
     /**
@@ -44,33 +44,33 @@ class UserController extends Controller
         $pageConfigs = ['pageHeader' => true];
         $breadcrumbs = [
             ["link" => "/dashboard", "name" => "Home"],
-            ["link"=> "/users","name" => "Usuarios"],
+            ["link" => "/users", "name" => "Usuarios"],
             ["name" => "Crear"]
         ];
 
-        $offices=Office::orderBy('name','ASC')
-        ->where('status','=','ACTIVO')   
-        ->pluck('name','id');
+        $offices = Office::orderBy('name', 'ASC')
+            ->where('status', '=', 'ACTIVO')
+            ->pluck('name', 'id');
 
-        $laborals=Laboral::orderBy('name','ASC')
-        ->where('status','=','ACTIVO')   
-        ->pluck('name','id');
+        $laborals = Laboral::orderBy('name', 'ASC')
+            ->where('status', '=', 'ACTIVO')
+            ->pluck('name', 'id');
 
-        $pensions=Pension::orderBy('name','ASC')
-        ->where('status','=','ACTIVO')   
-        ->pluck('name','id');
+        $pensions = Pension::orderBy('name', 'ASC')
+            ->where('status', '=', 'ACTIVO')
+            ->pluck('name', 'id');
 
-        $positions=Position::orderBy('name','ASC')
-        ->where('status','=','ACTIVO')   
-        ->pluck('name','id');
+        $positions = Position::orderBy('name', 'ASC')
+            ->where('status', '=', 'ACTIVO')
+            ->pluck('name', 'id');
 
-        $conditions=Condition::orderBy('name','ASC')
-        ->where('status','=','ACTIVO')   
-        ->pluck('name','id');
+        $conditions = Condition::orderBy('name', 'ASC')
+            ->where('status', '=', 'ACTIVO')
+            ->pluck('name', 'id');
 
-        
+
         $roles = Role::get();
-        return view('users.create',compact('offices','laborals','pensions','positions','conditions','roles','pageConfigs','breadcrumbs'));
+        return view('users.create', compact('offices', 'laborals', 'pensions', 'positions', 'conditions', 'roles', 'pageConfigs', 'breadcrumbs'));
     }
 
     /**
@@ -81,7 +81,7 @@ class UserController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        $user=new User;
+        $user = new User;
 
         $user->name = $request['name'];
         $user->ap_paterno = $request['ap_paterno'];
@@ -90,12 +90,12 @@ class UserController extends Controller
         $user->office_id  =  $request['office_id'];
         $user->email  =  $request['email'];
         $user->password  =  bcrypt($request['password']);
-        
+
         $user->save();
-       
+
         $profile = new Profile;
         $profile->user_id = $user->id;
-        $profile->photo = 'https://ui-avatars.com/api/?background=0D8ABC&color=fff&name='.$user->name.'+'.$user->ap_paterno;
+        $profile->photo = 'https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=' . $user->name . '+' . $user->ap_paterno;
         $profile->save();
 
         //actualize los roles
@@ -103,8 +103,7 @@ class UserController extends Controller
 
 
         return redirect()->route('users.index')
-            ->with('success','Registrado con exito.');
-
+            ->with('success', 'Registrado con exito.');
     }
 
     /**
@@ -118,12 +117,12 @@ class UserController extends Controller
         $pageConfigs = ['pageHeader' => true];
         $breadcrumbs = [
             ["link" => "/dashboard", "name" => "Home"],
-            ["link"=> "/users","name" => "Usuarios"],
+            ["link" => "/users", "name" => "Usuarios"],
             ["name" => "Perfil"]
         ];
 
         $office = Office::find($user->office->id);
-        
+
         /* $users = User::where('office_id', $office->id)
             ->where('status', 'ACTIVO')
             ->join('profiles as pro', 'users.id', '=', 'pro.user_id')
@@ -131,14 +130,14 @@ class UserController extends Controller
             ->get(); */
 
         $users = User::where('office_id', $office->id)
-        ->where('status', 'ACTIVO')
-        ->with('profile')
-        
-        ->get();
+            ->where('status', 'ACTIVO')
+            ->with('profile')
+
+            ->get();
 
         /* dd($user->profile->birthday); */
 
-        return view('users.show', compact('user','pageConfigs','breadcrumbs','users'));
+        return view('users.show', compact('user', 'pageConfigs', 'breadcrumbs', 'users'));
     }
 
     /**
@@ -152,34 +151,34 @@ class UserController extends Controller
         $pageConfigs = ['pageHeader' => true];
         $breadcrumbs = [
             ["link" => "/dashboard", "name" => "Home"],
-            ["link"=> "/users","name" => "Usuarios"],
+            ["link" => "/users", "name" => "Usuarios"],
             ["name" => "Editar"]
         ];
 
-        $offices=Office::orderBy('name','ASC')
-        ->where('status','=','ACTIVO')   
-        ->pluck('name','id');
+        $offices = Office::orderBy('name', 'ASC')
+            ->where('status', '=', 'ACTIVO')
+            ->pluck('name', 'id');
 
-        $laborals=Laboral::orderBy('name','ASC')
-        ->where('status','=','ACTIVO')   
-        ->pluck('name','id');
+        $laborals = Laboral::orderBy('name', 'ASC')
+            ->where('status', '=', 'ACTIVO')
+            ->pluck('name', 'id');
 
-        $pensions=Pension::orderBy('name','ASC')
-        ->where('status','=','ACTIVO')   
-        ->pluck('name','id');
+        $pensions = Pension::orderBy('name', 'ASC')
+            ->where('status', '=', 'ACTIVO')
+            ->pluck('name', 'id');
 
-        $positions=Position::orderBy('name','ASC')
-        ->where('status','=','ACTIVO')   
-        ->pluck('name','id');
+        $positions = Position::orderBy('name', 'ASC')
+            ->where('status', '=', 'ACTIVO')
+            ->pluck('name', 'id');
 
-        $conditions=Condition::orderBy('name','ASC')
-        ->where('status','=','ACTIVO')   
-        ->pluck('name','id');
+        $conditions = Condition::orderBy('name', 'ASC')
+            ->where('status', '=', 'ACTIVO')
+            ->pluck('name', 'id');
 
 
         $roles = Role::get();
 
-        return view('users.edit',compact('offices','laborals','pensions','positions','conditions','user','roles','pageConfigs','breadcrumbs'));
+        return view('users.edit', compact('offices', 'laborals', 'pensions', 'positions', 'conditions', 'user', 'roles', 'pageConfigs', 'breadcrumbs'));
     }
 
     /**
@@ -197,29 +196,27 @@ class UserController extends Controller
         $user->dni  =  $request['dni'];
         $user->email  =  $request['email'];
         $user->office_id  =  $request['office_id'];
-        
-        if($request['password']!=null)
-        {
+
+        if ($request['password'] != null) {
             $user->password  =  bcrypt($request['password']);
         }
         $user->save();
-        
-        if($request['name']!=null || $request['ap_paterno']!=null)
-        {
+
+        if ($request['name'] != null || $request['ap_paterno'] != null) {
             $profile = Profile::find($user);
-            $profile = Profile::where('user_id',$user->id)->first();
+            $profile = Profile::where('user_id', $user->id)->first();
             /* dd($profile); */
-            $profile->photo = 'https://ui-avatars.com/api/?background=0D8ABC&color=fff&name='.$user->name.'+'.$user->ap_paterno;
-        
+            $profile->photo = 'https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=' . $user->name . '+' . $user->ap_paterno;
+
             $profile->save();
         }
-        
-        
+
+
         //actualize los roles
         $user->roles()->sync($request->get('roles'));
-        
+
         return redirect()->route('users.index')
-            ->with('success','Actualizado con exito.');
+            ->with('success', 'Actualizado con exito.');
     }
 
     /**
@@ -233,4 +230,23 @@ class UserController extends Controller
         //
     }
 
+    public function userApi()
+    {
+        $users = User::with('office')->get();
+        $user_list = $users->map(function ($user) {
+            return collect(
+                [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'ap_paterno' => $user->ap_paterno,
+                    'ap_materno' => $user->ap_materno,
+                    'dni' => $user->dni,
+                    'office' => $user->office->name,
+                ]
+            );
+        });
+
+
+        return json_encode($user_list);
+    }
 }

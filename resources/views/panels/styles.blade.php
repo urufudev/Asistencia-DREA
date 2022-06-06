@@ -1,6 +1,6 @@
 {{-- style blade file --}}
     <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,600%7CIBM+Plex+Sans:300,400,500,600,700" rel="stylesheet">
-
+    @livewireStyles 
     <!-- BEGIN: Vendor CSS-->
     @if($configData['direction'] === 'ltr')
     <link rel="stylesheet" type="text/css" href="{{asset('vendors/css/vendors.min.css')}}">
@@ -41,4 +41,3 @@
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/style-rtl.css')}}">
     @endif
     <!-- END: Custom CSS-->
-    @livewireStyles 

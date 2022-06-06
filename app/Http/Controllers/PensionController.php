@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Pension;
 use Illuminate\Http\Request;
 use App\Http\Requests\Pension\StoreRequest;
@@ -71,7 +72,25 @@ class PensionController extends Controller
      */
     public function show(Pension $pension)
     {
-        //
+        $pageConfigs = ['pageHeader' => true];
+        $breadcrumbs = [
+            ["link" => "/dashboard", "name" => "Home"],
+            ["link"=> "/pensions","name" => "Lista de Régimen Pensionario"],
+            ["name" => "Ver"]
+        ];
+
+
+        $users = User::where('status','ACTIVO')
+            ->with('profile')
+            ->whereHas('profile', function ($query) use ($pension) {
+                return $query->where('pension_id', $pension->id);
+            })
+            ->orderBy('name', 'asc')
+            ->get()
+            
+            ->groupBy('office.name');
+        
+        return view('pensions.show',compact('pension','users','pageConfigs','breadcrumbs'));
     }
 
     /**

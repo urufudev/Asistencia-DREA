@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Laboral;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\Laboral\StoreRequest;
 use App\Http\Requests\Laboral\UpdateRequest;
-use Illuminate\Support\Facades\Gate;
 
 class LaboralController extends Controller
 {
@@ -25,9 +26,9 @@ class LaboralController extends Controller
     {
         $pageConfigs = ['pageHeader' => true];
         $breadcrumbs = [
-            ["link" => "/dashboard", "name" => "Home"],["name" => "Régimen Laboral"]
+            ["link" => "/dashboard", "name" => "Home"], ["name" => "Régimen Laboral"]
         ];
-        return view('laborals.index',['pageConfigs'=>$pageConfigs,'breadcrumbs'=>$breadcrumbs]);
+        return view('laborals.index', ['pageConfigs' => $pageConfigs, 'breadcrumbs' => $breadcrumbs]);
     }
 
     /**
@@ -40,13 +41,13 @@ class LaboralController extends Controller
         $pageConfigs = ['pageHeader' => true];
         $breadcrumbs = [
             ["link" => "/dashboard", "name" => "Home"],
-            ["link"=> "/laborals","name" => "Regimen Laboral"],
+            ["link" => "/laborals", "name" => "Regimen Laboral"],
             ["name" => "Crear"]
         ];
 
         $laboral = new Laboral();
-        
-        return view('laborals.create',compact('laboral','breadcrumbs','pageConfigs'));
+
+        return view('laborals.create', compact('laboral', 'breadcrumbs', 'pageConfigs'));
     }
 
     /**
@@ -57,8 +58,8 @@ class LaboralController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        $laboral = Laboral::create(array_merge($request->except('status'),[
-            'status'=> $request->status == 'on' ? 'ACTIVO' : 'INACTIVO' 
+        $laboral = Laboral::create(array_merge($request->except('status'), [
+            'status' => $request->status == 'on' ? 'ACTIVO' : 'INACTIVO'
         ]));
 
         return redirect()->route('laborals.index')->with('success', 'Registrado satisfactoriamente.');
@@ -72,7 +73,27 @@ class LaboralController extends Controller
      */
     public function show(Laboral $laboral)
     {
-        //
+        $pageConfigs = ['pageHeader' => true];
+        $breadcrumbs = [
+            ["link" => "/dashboard", "name" => "Home"],
+            ["link" => "/laborals", "name" => "Lista de Régimen Laboral"],
+            ["name" => "Ver"]
+        ];
+
+
+        $users = User::where('status', 'ACTIVO')
+            ->with('profile')
+            ->whereHas('profile', function ($query) use ($laboral) {
+                return $query->where('laboral_id', $laboral->id);
+            })
+            ->orderBy('name', 'asc')
+            ->get()
+
+            ->groupBy('office.name');
+
+        /* dd($users); */
+
+        return view('laborals.show', compact('laboral', 'users', 'pageConfigs', 'breadcrumbs'));
     }
 
     /**
@@ -86,11 +107,11 @@ class LaboralController extends Controller
         $pageConfigs = ['pageHeader' => true];
         $breadcrumbs = [
             ["link" => "/dashboard", "name" => "Home"],
-            ["link"=> "/laborals","name" => "Regimen Laboral"],
+            ["link" => "/laborals", "name" => "Regimen Laboral"],
             ["name" => "Editar"]
         ];
 
-        return view('laborals.edit',compact('laboral','pageConfigs','breadcrumbs'));
+        return view('laborals.edit', compact('laboral', 'pageConfigs', 'breadcrumbs'));
     }
 
     /**
@@ -102,10 +123,9 @@ class LaboralController extends Controller
      */
     public function update(UpdateRequest $request, Laboral $laboral)
     {
-        $laboral->fill(array_merge($request->except('status'),[
-            'status'=> $request->status == 'on' ? 'ACTIVO' : 'INACTIVO' 
-        ]))
-            ->save();
+        $laboral->fill(array_merge($request->except('status'), [
+            'status' => $request->status == 'on' ? 'ACTIVO' : 'INACTIVO'
+        ]))->save();
 
         return redirect()->route('laborals.index')
             ->with('info', 'Cambios actualizados con éxito');

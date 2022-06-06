@@ -30,6 +30,13 @@ class PresencialWork extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function profile()
+    {
+        return $this->belongsTo(User::class)->with('profile');
+    }
+
+
     public function office()
     {
         return $this->belongsTo(Office::class);

@@ -3,25 +3,26 @@
 namespace App\Http\Livewire\Users;
 
 use App\Models\User;
+use App\Models\Office;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\Gate;
 
 class Table extends Component
 {
-   
+
 
     /*-----------------DATATABLE -----------------*/
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
     protected $queryString = [
-        'search'=> ['except'=> ''],
+        'search' => ['except' => ''],
         'perPage'
     ];
 
     public $isOpen = false;
     public $perPage = 10;
-    public $sortField = "id";
+    public $sortField = "users.id";
     public $sortAsc = true;
     public $search = '';
     public function render()
@@ -29,24 +30,27 @@ class Table extends Component
         /* dd(request()->getRequestUri()); */
 
         $users = User::query()
+            ->with('office')
             ->search($this->search)
-            
-            ->join('offices as of', 'users.office_id', '=', 'of.id')
-            ->select('users.id','users.name','users.ap_paterno' ,'users.ap_paterno' ,'users.dni' ,'users.status', 'users.office_id', 'of.name as ofname')
-            ->orderBy($this->sortField, $this->sortAsc ? 'desc' : 'asc')
+            /* ->orderBy('offices.name', $this->sortAsc ? 'desc' : 'asc')
+            ->when($this->sortField, function ($query) {
+                $query->orderBy(Office::select($this->sortField)->whereColumn('offices.id', 'users.office_id'), $this->sortAsc ? 'desc' : 'asc');
+            }) */
+            ->orderBy(Office::select($this->sortField)->whereColumn('offices.id', 'users.office_id'), $this->sortAsc ? 'desc' : 'asc')
+
             ->paginate($this->perPage);
 
-            /* dd($users->offices); */
+        /* dd($users->offices); */
 
-            
 
-        return view('livewire.users.table',compact('users'));
+
+        return view('livewire.users.table', compact('users'));
     }
 
     public function sortBy($field)
     {
         if ($this->sortField === $field) {
-            $this->sortAsc = ! $this->sortAsc;
+            $this->sortAsc = !$this->sortAsc;
         } else {
             $this->sortAsc = true;
         }
@@ -61,33 +65,30 @@ class Table extends Component
 
     public function clear()
     {
-        $this->search= '';
-        $this->page= 1;
-        $this->perPage= 10;
+        $this->search = '';
+        $this->page = 1;
+        $this->perPage = 10;
     }
 
 
     public function destroy(User $user)
     {
-        
-        Gate::authorize('forceDelete',$user);
+
+        Gate::authorize('forceDelete', $user);
         /* dd($user); */
         if ($user->status == 'ACTIVO') {
             $user->update(['status' => 'SUSPENDIDO']);
-            $url="?perPage={$this->perPage}&page={$this->page}&search={$this->search}";
+            $url = "?perPage={$this->perPage}&page={$this->page}&search={$this->search}";
             session()->flash('danger', 'Se cambio a suspendido correctamente.');
-            return redirect()->to('/users'.$url);
-            
-            /* return back()->with('info', 'SE CAMBIO A SUSPENDIDO CORRECTAMENTE '); */
-        }
-        elseif($user->status == 'SUSPENDIDO') {
-            $user->update(['status' => 'ACTIVO']);
-            $url="?perPage={$this->perPage}&page={$this->page}&search={$this->search}";
-            session()->flash('warning', 'Se cambio a activo correctamente.');
-            return redirect()->to('/users'.$url);
-            /* return back()->with('warning', 'SE CAMBIO A ACTIVO CORRECTAMENTE '); */
-        } 
-    }
-    
-}
+            return redirect()->to('/users' . $url);
 
+            /* return back()->with('info', 'SE CAMBIO A SUSPENDIDO CORRECTAMENTE '); */
+        } elseif ($user->status == 'SUSPENDIDO') {
+            $user->update(['status' => 'ACTIVO']);
+            $url = "?perPage={$this->perPage}&page={$this->page}&search={$this->search}";
+            session()->flash('warning', 'Se cambio a activo correctamente.');
+            return redirect()->to('/users' . $url);
+            /* return back()->with('warning', 'SE CAMBIO A ACTIVO CORRECTAMENTE '); */
+        }
+    }
+}

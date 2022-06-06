@@ -13,7 +13,7 @@
 @section('actionbutton')
 <a href="{{route('users.index')}}"  class="btn btn-secondary">
   <svg class="svg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="24px" height="24px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
-  <span class="align-middle ml-25 text-bold-600">Volver</span>
+  <span class="align-middle ml-25 text-bold-600 white">Volver</span>
 </a> 
 @endsection
 
@@ -104,11 +104,13 @@
                                 <div class="avatar mr-1">
                                   <img src="{{$userp->profile->photo ?? 'https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=Sin+Foto'}}" alt="avtar images"
                                     width="32" height="32">
-                                    @if ($userp->profile->vaccine == null)
-                                    <span class="avatar-status-busy"></span>
+                                  @if ($userp->profile->vaccine == 'NO')
+                                    <span class="avatar-status-busy" data-toggle="tooltip" data-placement="top" data-original-title="No se vacuno"></span>
+                                    @elseif($userp->profile->vaccine == 'SI')
+                                    <span class="avatar-status-online" data-toggle="tooltip" data-placement="top" data-original-title="{{$userp->profile->vaccine_first_date .' - '.$userp->profile->vaccine_second_date}}"></span>
                                     @else
-                                    <span class="avatar-status-online"></span>
-                                    @endif
+                                    <span class="avatar-status-warning" data-toggle="tooltip" data-placement="top" data-original-title="No se registro ninguna opción"></span>
+                                  @endif
                                 </div>
                               </a>
                               <div class="media-body">

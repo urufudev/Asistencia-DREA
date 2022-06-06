@@ -9,13 +9,13 @@ use Illuminate\Support\Facades\Gate;
 
 class Table extends Component
 {
-   
+
 
     /*-----------------DATATABLE -----------------*/
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
     protected $queryString = [
-        'search'=> ['except'=> ''],
+        'search' => ['except' => ''],
         'perPage'
     ];
 
@@ -33,13 +33,13 @@ class Table extends Component
             ->orderBy($this->sortField, $this->sortAsc ? 'desc' : 'asc')
             ->paginate($this->perPage);
 
-        return view('livewire.events.table',compact('events'));
+        return view('livewire.events.table', compact('events'));
     }
 
     public function sortBy($field)
     {
         if ($this->sortField === $field) {
-            $this->sortAsc = ! $this->sortAsc;
+            $this->sortAsc = !$this->sortAsc;
         } else {
             $this->sortAsc = true;
         }
@@ -54,31 +54,67 @@ class Table extends Component
 
     public function clear()
     {
-        $this->search= '';
-        $this->page= 1;
-        $this->perPage= 10;
+        $this->search = '';
+        $this->page = 1;
+        $this->perPage = 10;
     }
+
+
+    /*     public function destroy(Event $event)
+    {
+
+        Gate::authorize('forceDelete', $event);
+        if ($event->status == 'ACTIVO') {
+            $event->update(['status' => 'INACTIVO']);
+            $url = "?perPage={$this->perPage}&page={$this->page}&search={$this->search}";
+            session()->flash('danger', 'Se cambio a inactivo correctamente.');
+            return redirect()->to('/events' . $url);
+
+            
+        } else {
+            $event->update(['status' => 'ACTIVO']);
+            $url = "?perPage={$this->perPage}&page={$this->page}&search={$this->search}";
+            session()->flash('warning', 'Se cambio a activo correctamente.');
+            return redirect()->to('/events' . $url);
+            
+        }
+    } */
 
 
     public function destroy(Event $event)
     {
-        
-        Gate::authorize('forceDelete',$event);
+
+        Gate::authorize('forceDelete', $event);
+        try {
+            $event->delete($event);
+        } catch (\Throwable $th) {
+            $url = "?perPage={$this->perPage}&page={$this->page}&search={$this->search}";
+            session()->flash('warning', 'Este registro esta siendo utilizado.');
+            return redirect()->to('/events' . $url);
+        }
+
+        $url = "?perPage={$this->perPage}&page={$this->page}&search={$this->search}";
+        session()->flash('danger', 'Se elimino correctamente.');
+        return redirect()->to('/events' . $url);
+    }
+
+    public function status(Event $event)
+    {
+
+        Gate::authorize('forceDelete', $event);
         if ($event->status == 'ACTIVO') {
             $event->update(['status' => 'INACTIVO']);
-            $url="?perPage={$this->perPage}&page={$this->page}&search={$this->search}";
-            session()->flash('danger', 'Se cambio a inactivo correctamente.');
-            return redirect()->to('/events'.$url);
-            
+            $url = "?perPage={$this->perPage}&page={$this->page}&search={$this->search}";
+            session()->flash('danger', 'Se cambio a Suspendido correctamente.');
+            return redirect()->to('/events' . $url);
+
             /* return back()->with('info', 'SE CAMBIO A INACTIVO CORRECTAMENTE '); */
-        }
-        else {
+        } else {
             $event->update(['status' => 'ACTIVO']);
-            $url="?perPage={$this->perPage}&page={$this->page}&search={$this->search}";
-            session()->flash('warning', 'Se cambio a activo correctamente.');
-            return redirect()->to('/events'.$url);
+            $url = "?perPage={$this->perPage}&page={$this->page}&search={$this->search}";
+            session()->flash('warning', 'Se cambio a Activo correctamente.');
+            return redirect()->to('/events' . $url);
             /* return back()->with('warning', 'SE CAMBIO A ACTIVO CORRECTAMENTE '); */
-        } 
+        }
     }
-    
 }

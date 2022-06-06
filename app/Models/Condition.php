@@ -9,20 +9,24 @@ class Condition extends Model
 {
     use HasFactory;
 
-    protected $fillable=[
-        'name','description','status'
+    protected $fillable = [
+        'name', 'description', 'status'
     ];
 
     public function scopeSearch($query, $val)
     {
         return $query
-        ->where('name','like','%'.$val.'%')
-        ->Orwhere('description','like','%'.$val.'%')
-        ;
+            ->where('name', 'like', '%' . $val . '%')
+            ->Orwhere('description', 'like', '%' . $val . '%');
     }
 
     public function profiles()
     {
         return $this->hasMany(Profile::class);
+    }
+
+    public function events()
+    {
+        return $this->belongsToMany(Event::class);
     }
 }

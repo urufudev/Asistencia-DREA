@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\Event;
-use App\Models\PresencialWork;
 use Illuminate\Http\Request;
+use App\Models\PresencialWork;
 use Illuminate\Support\Facades\Gate;
+use Acaronlex\LaravelCalendar\Calendar;
+use Illuminate\Support\Facades\Auth;
 
 class PresencialWorkController extends Controller
 {
@@ -17,7 +20,8 @@ class PresencialWorkController extends Controller
 
     public function index()
     {
-        $pageConfigs = ['pageHeader' => true];
+        /* $pageConfigs = ['pageHeader' => true]; */
+        $pageConfigs = ['pageHeader' => true,'isMenuCollapsed' => true];
         $breadcrumbs = [
             ["link" => "/dashboard", "name" => "Home"],["name" => "Registro de Trabajo Presencial"]
         ];
@@ -57,8 +61,61 @@ class PresencialWorkController extends Controller
     }
 
     public function myattendance(){
+        $pageConfigs = ['pageHeader' => true];
+        $breadcrumbs = [
+            ["link" => "/dashboard", "name" => "Home"],["name" => "Historial de Registro de Trabajo Presencial"]
+        ];
+
+
+        $user= Auth::user()->id;
+
+        $presencial_works = PresencialWork::where('user_id',$user)->get();
+
         
-        return view('presencials.myattendance');
+        $myattendances = [];
+        foreach ($presencial_works as $presencial_work) {
+
+            $myattendance[] = Calendar::event(
+                substr($presencial_work->event->name,10 ), //event title
+                true, //full day event?
+                $presencial_work->event->date, //start time (you can also use Carbon instead of DateTime)
+                $presencial_work->event->date,
+                $presencial_work->event->id,
+                [
+                    'url' => '#',
+                    'display' => 'auto',
+                    /* 'borderColor' => 'red', */
+                    
+
+                    //any other full-calendar supported parameters
+                ]
+            );
+        }
+
+        $calendar = new Calendar();
+        $calendar->addEvents($myattendance)
+        ->setOptions([
+            'locale' => 'es',
+            'firstDay' => 1,
+            'background' => true,
+            'height'=> 700,
+            'displayEventTime' => true,
+            'initialView' => 'dayGridMonth',
+            'selectable' => true,
+            'headerToolbar' => [
+                'end' => 'prev,next',
+            ],
+
+            
+        ]);
+
+        $calendar->setId('1');
+        $calendar->setCallbacks([
+            'select' => 'function(selectionInfo){}',
+            'eventClick' => 'function(event){}'
+        ]);
+        
+        return view('presencials.myattendance',compact('calendar'),['pageConfigs'=>$pageConfigs,'breadcrumbs'=>$breadcrumbs]);
         
 
     }

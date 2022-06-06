@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\PresencialWork;
 use App\Http\Requests\Event\StoreRequest;
 use App\Http\Requests\Event\UpdateRequest;
+use App\Models\Condition;
 
 class EventController extends Controller
 {
@@ -27,9 +28,9 @@ class EventController extends Controller
     {
         $pageConfigs = ['pageHeader' => true];
         $breadcrumbs = [
-            ["link" => "/dashboard", "name" => "Home"],["name" => "Trabajo Presencial"]
+            ["link" => "/dashboard", "name" => "Home"], ["name" => "Trabajo Presencial"]
         ];
-        return view('events.index',['pageConfigs'=>$pageConfigs,'breadcrumbs'=>$breadcrumbs]);
+        return view('events.index', ['pageConfigs' => $pageConfigs, 'breadcrumbs' => $breadcrumbs]);
     }
 
     /**
@@ -42,13 +43,18 @@ class EventController extends Controller
         $pageConfigs = ['pageHeader' => true];
         $breadcrumbs = [
             ["link" => "/dashboard", "name" => "Home"],
-            ["link"=> "/events","name" => "Trabajo Presencial"],
+            ["link" => "/events", "name" => "Trabajo Presencial"],
             ["name" => "Crear"]
         ];
 
         $event = new Event();
-        
-        return view('events.create',compact('event','breadcrumbs','pageConfigs'));
+
+        /* $conditions = Condition::orderBy('name', 'ASC')
+            ->where('status', '=', 'ACTIVO')
+            ->pluck('name', 'id'); */
+        $conditions = Condition::get();
+
+        return view('events.create', compact('event', 'conditions', 'breadcrumbs', 'pageConfigs'));
     }
 
     /**
@@ -60,12 +66,12 @@ class EventController extends Controller
     public function store(StoreRequest $request)
     {
         /* dd($request); */
-        
-        $event = Event::create(array_merge($request->except('status'),[
-            'status'=> $request->status == 'on' ? 'ACTIVO' : 'INACTIVO' 
+
+        $event = Event::create(array_merge($request->except('status', 'conditions'), [
+            'status' => $request->status == 'on' ? 'ACTIVO' : 'INACTIVO'
         ]));
 
-        
+        $event->conditions()->sync($request->get('conditions'));
 
         return redirect()->route('events.index')->with('success', 'Registrado satisfactoriamente.');
     }
@@ -82,16 +88,18 @@ class EventController extends Controller
         $pageConfigs = ['pageHeader' => true];
         $breadcrumbs = [
             ["link" => "/dashboard", "name" => "Home"],
-            ["link"=> "/users","name" => "Trabajo Presencial"],
+            ["link" => "/users", "name" => "Trabajo Presencial"],
             ["name" => "Detalles"]
         ];
 
-        
 
-        $eventdetails = PresencialWork::where('event_id',$event->id)
-        ->with('office')
-        ->get()
-        ->groupBy('office_id');
+
+        $eventdetails = PresencialWork::where('event_id', $event->id)
+            ->with('office')
+            ->get()
+            /* ->groupBy('office_id'); */
+
+            ->groupBy('user.office.id');
 
         /* $presencialsDetails = Event::where('status','ACTIVO')
             ->orderBy('date', 'desc')
@@ -107,9 +115,9 @@ class EventController extends Controller
         
         */
 
-       /*  dd($eventdetails); */
+        /*  dd($eventdetails); */
 
-        return view('events.show', compact('event','pageConfigs','breadcrumbs','eventdetails'));
+        return view('events.show', compact('event', 'pageConfigs', 'breadcrumbs', 'eventdetails'));
     }
 
     /**
@@ -123,13 +131,13 @@ class EventController extends Controller
         $pageConfigs = ['pageHeader' => true];
         $breadcrumbs = [
             ["link" => "/dashboard", "name" => "Home"],
-            ["link"=> "/events","name" => "Trabajo Presencial"],
+            ["link" => "/events", "name" => "Trabajo Presencial"],
             ["name" => "Editar"]
         ];
-
+        $conditions = Condition::get();
         /* dd($event); */
 
-        return view('events.edit',compact('event','pageConfigs','breadcrumbs'));
+        return view('events.edit', compact('event', 'conditions', 'pageConfigs', 'breadcrumbs'));
     }
 
     /**
@@ -141,11 +149,12 @@ class EventController extends Controller
      */
     public function update(UpdateRequest $request, Event $event)
     {
-        
-        $event->fill(array_merge($request->except('status'),[
-            'status'=> $request->status == 'on' ? 'ACTIVO' : 'INACTIVO' 
-        ]))
-            ->save();
+
+        $event->fill(array_merge($request->except('status', 'conditions'), [
+            'status' => $request->status == 'on' ? 'ACTIVO' : 'INACTIVO'
+        ]))->save();
+
+        $event->conditions()->sync($request->get('conditions'));
 
         return redirect()->route('events.index')
             ->with('info', 'Cambios actualizados con éxito');
@@ -157,36 +166,51 @@ class EventController extends Controller
      * @param  \App\Models\Event  $event
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Event $event)
+    public function destroy(Event $event, Request $request)
     {
-        //
+        dd($request);
     }
 
-    public function pdf(Event $event){
-        
-        $eventdetails = PresencialWork::where('event_id',$event->id)
-        ->with('office')
-      /*   ->with('user') */
-        /* ->orderBy('user.ap_paterno', 'desc') */
-        ->get()
-        ->sortBy('user.ap_paterno')
-        ->groupBy('office_id');
+    public function destroyuser(Request $request)
+    {
+        $deleteuser = PresencialWork::where('id', $request->id)->first();
 
-      /*   dd($eventdetails); */
+        $deleteuser->delete();
 
-        $url = 'http://200.37.186.114/images/drea/header.png';
+        return redirect()->route('events.show', $deleteuser->event_id)
+            ->with('danger', 'Se elimino correctamente.');
 
 
-        $pdf = PDF::loadView('events.report',compact('eventdetails','event','url'))->setPaper('A4', 'landscape')
-        ->setOptions(['isRemoteEnabled' => true,'isHtml5ParserEnabled' => false , 'isPhpEnabled' => true]);
-        
-        /* $pdf->setBasePath($_SERVER['DOCUMENT_ROOT']); */
+        /* dd($deleteuser); */
+    }
 
-        
+    public function pdf(Event $event)
+    {
+
+        $eventdetails = PresencialWork::where('event_id', $event->id)
+            ->with('office')
+            /*   ->with('user') */
+            /* ->orderBy('user.ap_paterno', 'desc') */
+
+            ->get()
+            ->sortBy([
+                ['office.name', 'asc'],
+                ['user.ap_paterno', 'asc'],
+            ])
+
+            /* ->sortBy('office.name')
+        ->sortByDesc('user.ap_paterno') */
+
+            ->groupBy('office_id');
+
+        /*   dd($eventdetails); */
+
+
+
+        $pdf = PDF::loadView('events.report', compact('eventdetails', 'event'))->setPaper('A4', 'landscape')
+            ->setOptions(['isRemoteEnabled' => true, 'isHtml5ParserEnabled' => false, 'isPhpEnabled' => true]);
+
+
         return $pdf->stream();
-
-
-        
     }
-
 }

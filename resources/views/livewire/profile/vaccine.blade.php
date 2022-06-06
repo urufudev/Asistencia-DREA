@@ -33,21 +33,30 @@
   @if ($vaccineDateShow )
   <div class="form-body">
       <div class="row">
-          <div class="col-6">
+          <div class="col-4">
               <div class="form-group">
                 <label class="form-label">Primera Dosis</label>
-                <input type="date" class="form-control @error('vaccine_first') is-invalid @enderror" name="vaccine_first" @if($user !=null) value="{{old('vaccine_first',  $user->profile->vaccine_first)}}" @else value="{{old('vaccine_first')}}"  @endif   autocomplete="off">
+                <input type="date" class="form-control @error('vaccine_first') is-invalid @enderror" name="vaccine_first" @if($user !=null) value="{{old('vaccine_first', date('Y-m-d', strtotime( $user->profile->vaccine_first)))}}" @else value="{{old('vaccine_first')}}"  @endif   autocomplete="off">
                 @error('vaccine_first')
                     <div class="text-danger fs-15">{{$message}}</div>
                 @enderror
               </div>
             </div>
 
-            <div class="col-6">
+            <div class="col-4">
               <div class="form-group">
                 <label class="form-label">Segunda Dosis</label>
-                <input type="date" class="form-control @error('vaccine_second') is-invalid @enderror" name="vaccine_second" @if($user !=null) value="{{old('vaccine_second',  $user->profile->vaccine_second)}}" @else value="{{old('vaccine_second')}}"  @endif autocomplete="off" >
+                <input type="date" class="form-control @error('vaccine_second') is-invalid @enderror" name="vaccine_second" @if($user !=null) value="{{old('vaccine_second', date('Y-m-d', strtotime( $user->profile->vaccine_second)))}}" @else value="{{old('vaccine_second')}}"  @endif autocomplete="off" >
                 @error('vaccine_second')
+                    <div class="text-danger fs-15">{{$message}}</div>
+                @enderror
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="form-group">
+                <label class="form-label">Tercera Sosis</label>
+                <input type="date" class="form-control @error('vaccine_third') is-invalid @enderror" name="vaccine_third" @if($user !=null) value="{{old('vaccine_third', date('Y-m-d', strtotime( $user->profile->vaccine_third)))}}" @else value="{{old('vaccine_third')}}"  @endif autocomplete="off" >
+                @error('vaccine_third')
                     <div class="text-danger fs-15">{{$message}}</div>
                 @enderror
               </div>

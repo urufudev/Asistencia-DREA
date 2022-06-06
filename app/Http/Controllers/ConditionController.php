@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Condition;
 use Illuminate\Http\Request;
 use App\Http\Requests\Condition\StoreRequest;
 use App\Http\Requests\Condition\UpdateRequest;
+
 class ConditionController extends Controller
 {
     /**
@@ -68,7 +70,27 @@ class ConditionController extends Controller
      */
     public function show(Condition $condition)
     {
-        //
+        $pageConfigs = ['pageHeader' => true];
+        $breadcrumbs = [
+            ["link" => "/dashboard", "name" => "Home"],
+            ["link"=> "/conditions","name" => "Lista de Condición Laboral"],
+            ["name" => "Ver"]
+        ];
+
+
+        $users = User::where('status','ACTIVO')
+            ->with('profile')
+            ->whereHas('profile', function ($query) use ($condition) {
+                return $query->where('condition_id', $condition->id);
+            })
+            ->orderBy('name', 'asc')
+            ->get()
+            
+            ->groupBy('office.name');
+
+            /* dd($users); */
+
+        return view('conditions.show',compact('condition','users','pageConfigs','breadcrumbs'));
     }
 
     /**

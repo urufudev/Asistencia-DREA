@@ -18,13 +18,13 @@ use App\Mail\ConfirmEventMailable;
 
 class Table extends Component
 {
-   
+
 
     /*-----------------DATATABLE -----------------*/
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
     protected $queryString = [
-        'search'=> ['except'=> ''],
+        'search' => ['except' => ''],
         'perPage'
     ];
 
@@ -64,40 +64,47 @@ class Table extends Component
         'personscovid' => 'personas contagiadas',
         'medicine' => 'medicina',
     ];
-    
+
     public function render()
     {
         /* dd(request()->getRequestUri()); */
         /* $this->control = 0; */
 
+        $user = Auth::user();
+
+        /* dd($user->profile->condition->id); */
+
         /* $presencials = Event::query()
             ->search($this->search)
             ->orderBy($this->sortField, $this->sortAsc ? 'desc' : 'asc')
             ->paginate($this->perPage); */
-            $presencialsDates = Event::where('status','ACTIVO')
-            ->orderBy('date', 'desc')
-            
+        $presencialsDates = Event::where('status', 'ACTIVO')
+            /* ->with('conditions')*/
+            ->whereHas('conditions', function ($query) use ($user) {
+                return $query->where('condition_id', $user->profile->condition->id);
+            })
+            ->orderBy('date', 'asc')
             ->get()
             ->groupBy(function ($presencial) {
-                return Carbon::parse($presencial->date)->format('d/m/Y');
+                return Carbon::parse($presencial->date)->isoformat('ddd D MMM');
             });
 
 
 
 
-            /* $eventdetails = PresencialWork::where('event_id',$presencial->id)
+        /* $eventdetails = PresencialWork::where('event_id',$presencial->id)
             ->get();
 
             dd($presencialsDates); */
-            
 
-        return view('livewire.presencials.table',compact('presencialsDates'));
+
+        return view('livewire.presencials.table', compact('presencialsDates'));
     }
 
     public function sortBy($field)
     {
         if ($this->sortField === $field) {
-            $this->sortAsc = ! $this->sortAsc;
+            $this->sortAsc = !$this->sortAsc;
         } else {
             $this->sortAsc = true;
         }
@@ -112,197 +119,72 @@ class Table extends Component
 
     public function clear()
     {
-        $this->search= '';
-        $this->page= 1;
-        $this->perPage= 10;
+        $this->search = '';
+        $this->page = 1;
+        $this->perPage = 10;
     }
 
- /*    public function updated()
-    {
-        if ($this->feber = 'SI' &&  $this->respire = 'SI' && $this->fleme = 'SI') {
-            $control = 'SI';
-        } 
-        elseif($this->feber = 'SI' &&  $this->respire = 'SI' && $this->olfate = 'SI')  {
-            $control = 'SI';
-        }
-        elseif($this->feber = 'SI' &&  $this->respire = 'SI' && $this->personscovid = 'SI')  {
-            $control = 'SI';
-        }
-        elseif($this->feber = 'SI' &&  $this->fleme = 'SI' && $this->olfate = 'SI')  {
-            $control = 'SI';
-        }
-        elseif($this->feber = 'SI' &&  $this->fleme = 'SI' && $this->personscovid = 'SI')  {
-            $control = 'SI';
-        }
-        elseif($this->feber = 'SI' &&  $this->olfate = 'SI' && $this->personscovid = 'SI')  {
-            $control = 'SI';
-        }
-        elseif($this->respire = 'SI' &&  $this->fleme = 'SI' && $this->olfate = 'SI')  {
-            $control = 'SI';
-        }
-        elseif($this->respire = 'SI' &&  $this->fleme = 'SI' && $this->personscovid = 'SI')  {
-            $control = 'SI';
-        }
-        elseif($this->respire = 'SI' &&  $this->olfate = 'SI' && $this->personscovid = 'SI')  {
-            $control = 'SI';
-        }
-        elseif($this->fleme = 'SI' &&  $this->olfate = 'SI' && $this->personscovid = 'SI')  {
-            $control = 'SI';
-        }
-        else{
-            $control = 'NO';
-        }
-        
-    } */
 
-    public function updated($name, $value)
-    {
-        /* if($name == 'feber' && $value == 'SI' ) {
-            $this->control = $this->control + 1;
-            
-        }
-        if($name == 'respire' && $value == 'SI' ) {
-            $this->control = $this->control + 1;
-            
-        }
-        if($name == 'fleme' && $value == 'SI' ) {
-            $this->control = $this->control + 1;
-            
-        }
-        if($name == 'olfate' && $value == 'SI' ) {
-            $this->control = $this->control + 1;
-            
-        }
-        if($name == 'personscovid' && $value == 'SI' ) {
-            $this->control = $this->control + 1;
-            
-        } */
 
-        /* old */
-        /* if ($name == 'feber' && $value == 'SI' ) {
-            if ($this->control >= 0){
-                $this->control = $this->control + 1;
-
-            }
-        }
-        elseif($name == 'feber' && $value == 'NO' ){
-            if($this->control >= 1){
-                $this->control--;
-
-            }
- 
-        } */
-
-        /* if($name == 'respire' && $value == 'SI' ) {
-            $this->control = $this->control + 1;
-            
-        }
-        else{
-            if ($this->control > 0){
-                $this->control = $this->control - 1;
-
-            }
-            
-        }
-        if($name == 'fleme' && $value == 'SI' ) {
-            $this->control = $this->control + 1;
-            
-        }
-        else{
-            if ($this->control > 0){
-                $this->control = $this->control - 1;
-
-            }
-            
-        }
-        if($name == 'olfate' && $value == 'SI' ) {
-            $this->control = $this->control + 1;
-            
-        }
-        else{
-            if ($this->control > 0){
-                $this->control = $this->control - 1;
-
-            }
-            
-        }
-        if($name == 'personscovid' && $value == 'SI' ) {
-            $this->control = $this->control + 1;
-            
-        }
-        else{
-            if ($this->control > 0){
-                $this->control = $this->control - 1;
-
-            }
-            
-        }
-        if($name == 'medicine' && $value == 'SI' ) {
-            $this->control = $this->control + 1;
-            
-        }
-        else{
-            if ($this->control > 0){
-                $this->control = $this->control - 1;
-
-            }
-            
-        } */
-    }
-
-    public function register(Event $presencial )
+    public function register(Event $presencial)
     {
 
         /* dd($this->presencial_data); */
-        
-        $presencialworks = PresencialWork::where('user_id' , Auth::user()->id)
-        ->where( 'event_id', $presencial->id)
-        ->first();
 
-     /*    dd($presencialworks);
+        $countpresencialworks =  PresencialWork::where('event_id', $presencial->id)->count();
 
-        dd($presencialworks == null);
-        dd(empty ( $presencialworks)); */
-        
-        
-        /* dd($presencial->id); */
+        /* dd($countpresencialworks); */
+        if ($countpresencialworks <= $presencial->userlimit) {
 
-        if($presencialworks == null){
+            $presencialworks = PresencialWork::where('user_id', Auth::user()->id)
+                ->where('event_id', $presencial->id)
+                ->first();
 
-            $validatedData = $this->validate($this->rules);
-            $presencial->presencialworks()->create([
-                'event_id' => $presencial->id,
-                'user_id' => Auth::user()->id,
-                'office_id'=> Auth::user()->office->id,
-                
-                'feber' => $this->feber,
-                'respire' => $this->respire,
-                'fleme' => $this->fleme,
-                'olfate' => $this->olfate,
-                'personscovid' => $this->personscovid,
-                'medicine' => $this->medicine,
-                'name_medicine' => $this->name_medicine,
-                
-            ]);
-            
-            /* dd($this->feber); */
-            /* $presencial->save(); */
-            $user = Auth::user();
-            $event = $presencial;
+            if ($presencialworks == null) {
 
-            Mail::to($user)->send(new ConfirmEventMailable($user, $event));
+                $validatedData = $this->validate($this->rules);
+                $presencial->presencialworks()->create([
+                    'event_id' => $presencial->id,
+                    'user_id' => Auth::user()->id,
+                    'office_id' => Auth::user()->office->id,
 
-    
-            $url="?perPage={$this->perPage}&page={$this->page}&search={$this->search}";
+                    'feber' => $this->feber,
+                    'respire' => $this->respire,
+                    'fleme' => $this->fleme,
+                    'olfate' => $this->olfate,
+                    'personscovid' => $this->personscovid,
+                    'medicine' => $this->medicine,
+                    'name_medicine' => $this->name_medicine,
+
+                ]);
+
+                /* dd($this->feber); */
+                /* $presencial->save(); */
+                $user = Auth::user();
+                $event = $presencial;
+
+                Mail::to($user)->send(new ConfirmEventMailable($user, $event));
+
+
+                $url = "?perPage={$this->perPage}&page={$this->page}&search={$this->search}";
                 session()->flash('success', 'Te registraste correctamente.');
-                return redirect()->to('/presencials'.$url);
+                return redirect()->to('/presencials' . $url);
+            } elseif ($presencialworks !== null) {
+                $url = "?perPage={$this->perPage}&page={$this->page}&search={$this->search}";
+
+                session()->flash('danger', 'Ya te encuentras registrado' . $presencial->id);
+                return redirect()->to('/presencials' . $url);
+            }
+        } else {
+            $url = "?perPage={$this->perPage}&page={$this->page}&search={$this->search}";
+
+            session()->flash('danger', 'Ya se supero el limite de ' . $presencial->userlimit . ' trabajadores.');
+            return redirect()->to('/presencials' . $url);
         }
-        elseif($presencialworks !==null){
-            $url="?perPage={$this->perPage}&page={$this->page}&search={$this->search}";
-                    
-                    session()->flash('danger', 'Ya te encuentras registrado'.$presencial->id);
-                    return redirect()->to('/presencials'.$url);
-        }
+
+
+
+
 
         /* $presencialworks = PresencialWork::where('user_id' , $presencial->id)
         ->get();
@@ -340,24 +222,18 @@ class Table extends Component
                 echo 'xd';
             }
         } */
-
- 
     }
 
     public function destroy(Event $presencial)
     {
         /* dd($presencial); */
         Gate::authorize('deleteAttendance', 'Models\PresencialWork');
-        $presencialworks = PresencialWork::where('user_id' , Auth::user()->id)
-        ->where( 'event_id', $presencial->id)
-        ->first();
+        $presencialworks = PresencialWork::where('user_id', Auth::user()->id)
+            ->where('event_id', $presencial->id)
+            ->first();
 
         $presencialworks->delete();
         session()->flash('danger', 'Se elimino el registro correctamente.');
         return redirect()->to('/presencials');
-
     }
-
-
-    
 }

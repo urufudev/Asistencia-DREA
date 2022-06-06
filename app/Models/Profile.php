@@ -16,7 +16,7 @@ class Profile extends Model
     use HasFactory;
 
     protected $fillable=[
-        'photo','birthday','genre','phone','vaccine','vaccine_first','vaccine_second',
+        'photo','birthday','genre','phone','vaccine','vaccine_first','vaccine_second','vaccine_third',
         'address','department_id',
         'province_id','district_id','laboral_id','pension_id','position_id',
         'condition_id'
@@ -29,6 +29,39 @@ class Profile extends Model
         
         if ($this->birthday != null) {
             return Carbon::parse($this->birthday)->format('d/m/Y');
+        }
+        else{
+            return 'Sin Datos';
+        }
+    }
+
+    public function getVaccineFirstDateAttribute()
+    {
+        
+        if ($this->vaccine_first != null) {
+            return Carbon::parse($this->vaccine_first)->format('d/m/Y');
+        }
+        else{
+            return 'Sin Datos';
+        }
+    }
+
+    public function getVaccineSecondDateAttribute()
+    {
+        
+        if ($this->vaccine_second != null) {
+            return Carbon::parse($this->vaccine_second)->format('d/m/Y');
+        }
+        else{
+            return 'Sin Datos';
+        }
+    }
+
+    public function getVaccineThirdDateAttribute()
+    {
+        
+        if ($this->vaccine_third != null) {
+            return Carbon::parse($this->vaccine_third)->format('d/m/Y');
         }
         else{
             return 'Sin Datos';
